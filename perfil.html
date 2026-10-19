@@ -3,34 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharkot - Perfil</title>
+    <title>Sharkot - Perfil Personalizável</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">Sharkot</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Início</a></li>
-                <li><a href="perfil.html" class="active">Perfil</a></li>
-                <li><a href="premium.html">Premium</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="profile-bg-convencional" id="main-background"> <!-- O fundo branco (convencional muda cor, premium muda cor/foto/GIF) -->
 
-    <main class="container">
-        <section class="profile-card">
-            <h2>Meu Perfil</h2>
-            <div class="profile-info">
-                <p><strong>Usuário:</strong> 7mr-sam7</p>
-                <p><strong>Status:</strong> Membro Ativo</p>
-                <p><strong>Plano:</strong> Gratuito / <a href="premium.html">Fazer Upgrade</a></p>
-            </div>
-        </section>
-    </main>
+    <div class="profile-wrapper">
+        
+        <!-- BANNER 1 (Bloco Rosa do modelo) -->
+        <div class="banner-block banner-rosa" id="banner-1">
+            <!-- Convencional: Apenas cor sólida. Premium: Até 3 imagens/GIFs ou cor -->
+        </div>
 
-    <footer>
-        <p>&copy; 2026 Sharkot. Todos os direitos reservados.</p>
-    </footer>
+        <!-- FOTO CENTRAL (A Bola Verde do modelo) -->
+        <div class="profile-avatar-container" id="avatar-container" style="background-color: #00ff00;">
+            <!-- Convencional: Foto estática + cor da bola. Premium: GIF na foto + cor -->
+            <img src="default-avatar.png" alt="Foto de Perfil" id="avatar-img">
+        </div>
+
+        <!-- BANNER 2 (Bloco Azul do modelo) -->
+        <div class="banner-block banner-azul" id="banner-2">
+            <!-- Convencional: Apenas cor sólida. Premium: Até 3 imagens/GIFs ou cor -->
+        </div>
+
+    </div>
+
+    <!-- Informações básicas do usuário -->
+    <div class="profile-info-card">
+        <h2>7mr-sam7</h2>
+        <p class="badge-status">Membro Convencional / <a href="premium.html">Seja Premium</a></p>
+    </div>
+
 </body>
 </html>
