@@ -1,75 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharkot - Início</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080910"><meta name="description" content="Sharkot — economia, jogos e ferramentas para seu servidor Discord.">
+<title>Sharkot — Special Core</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">Sharkot</div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Início</a></li>
-                <li><a href="perfil.html">Perfil</a></li>
-                <li><a href="premium.html">Premium</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main class="container">
-        <section class="hero">
-            <h1>Special Core · v0.1.0-alpha</h1>
-            <p>Confira abaixo a lista completa de comandos disponíveis no bot!</p>
-            <a href="premium.html" class="btn-primary">Seja Premium</a>
-        </section>
-
-        <!-- SEÇÃO DE COMANDOS --> 
-        <section class="commands-section">
-            
-            <h2>🐟 Peixes (Economia)</h2>
-            <div class="command-grid">
-                <div class="cmd-card"><code>/atm [membro]</code><p>Consulta seu saldo ou o de alguém.</p></div>
-                <div class="cmd-card"><code>/saldo</code><p>Consulta seu saldo atual.</p></div>
-                <div class="cmd-card"><code>/carteira</code><p>Mostra saldo disponível, reservado e patrimônio.</p></div>
-                <div class="cmd-card"><code>/extrato [pagina]</code> / <code>/historico</code><p>Consultam movimentações financeiras.</p></div>
-                <div class="cmd-card"><code>/comprovante &lt;id&gt;</code><p>Consulta um recibo de uma operação sua.</p></div>
-                <div class="cmd-card"><code>/atmglobal</code> / <code>/ranking</code><p>Mostram o ranking de economia (sem o criador).</p></div>
-            </div>
-
-            <h2>🎲 Transferências e Jogos</h2>
-            <div class="command-grid">
-                <div class="cmd-card"><code>/pix</code> / <code>/pagar</code> / <code>/pay</code> / <code>/transferir</code><p>Envia Peixes para outro membro.</p></div>
-                <div class="cmd-card"><code>/roleta &lt;aposta&gt; &lt;tipo&gt; &lt;escolha&gt;</code><p>Joga roleta europeia (36x número, 2x cor/paridade/faixa, 3x dúzia; zero perde apostas externas).</p></div>
-                <div class="cmd-card"><code>/diamantes &lt;aposta&gt;</code><p>Escolhe um quadradinho: diamante dobra a aposta, bomba perde tudo.</p></div>
-            </div>
-
-            <h2>🛠️ Servidor e Utilidades</h2>
-            <div class="command-grid">
-                <div class="cmd-card"><code>/ping</code><p>Verifica se o bot está respondendo.</p></div>
-                <div class="cmd-card"><code>/texto &lt;mensagem&gt;</code> (ou <code>.fala</code>)<p>Envia texto como o bot (Mod/Admin).</p></div>
-                <div class="cmd-card"><code>/call</code> / <code>/saircall</code><p>Conecta ou desconecta o bot da sua call (Mod/Admin).</p></div>
-                <div class="cmd-card"><code>/embed</code> / <code>.enviar_embed</code><p>Cria um embed personalizado.</p></div>
-                <div class="cmd-card"><code>.componente</code><p>Abre por DM um montador privado de mensagens completas.</p></div>
-                <div class="cmd-card"><code>.ticket</code> / <code>/ticket</code><p>Configura painel de atendimento com até 5 tipos de ticket (Mod/Admin).</p></div>
-                <div class="cmd-card"><code>/ban</code> / <code>/kick</code> / <code>/unban</code><p>Gerencia banimentos e expulsões no servidor com confirmação.</p></div>
-                <div class="cmd-card"><code>/warn</code> / <code>/warnings</code><p>Registra e consulta avisos de usuários.</p></div>
-                <div class="cmd-card"><code>Ferramentas Gerais</code><p><code>/timeout</code>, <code>/untimeout</code>, <code>/purge</code>, <code>/slowmode</code>, <code>/userinfo</code>, <code>/serverinfo</code> e <code>/poll</code>.</p></div>
-                <div class="cmd-card"><code>.somar &lt;conta&gt;</code><p>Calcula operações matemáticas básicas.</p></div>
-            </div>
-
-            <h2>👑 Dono do Servidor</h2>
-            <div class="command-grid">
-                <div class="cmd-card"><code>/mod &lt;membro&gt;</code><p>Adiciona um moderador (exclusivo do Dono).</p></div>
-                <div class="cmd-card"><code>/unmod &lt;membro&gt;</code><p>Remove um moderador (exclusivo do Dono).</p></div>
-            </div>
-
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Sharkot. Todos os direitos reservados.</p>
-    </footer>
-</body>
-</html>
+<header class="site-header"><nav class="nav container">
+<a class="brand" href="index.html"><span class="brand-mark">SC</span><span>Special Core<small>SHARKOT · DISCORD BOT</small></span></a>
+<div class="nav-links"><a class="active" href="index.html">Início</a><a href="#comandos">Comandos</a><a href="perfil.html">Perfil</a><a href="premium.html">Premium</a><a href="admin.html">Admin</a><a class="btn small" href="https://discord.com/oauth2/authorize?client_id=1548184820872380517" target="_blank" rel="noopener">Adicionar bot ↗</a></div>
+</nav></header>
+<main>
+<section class="hero container"><div class="hero-grid">
+<div><span class="eyebrow"><span class="pulse"></span> Sistema ativo · Special Core</span><h1>Seu servidor. <span class="gradient">Mais possibilidades.</span></h1>
+<p class="lead">Conheça o Sharkot: economia com Peixes, jogos, ferramentas de moderação e recursos para deixar seu Discord do seu jeito — tudo em um só bot.</p>
+<div class="hero-actions"><a class="btn" href="https://discord.com/oauth2/authorize?client_id=1548184820872380517" target="_blank" rel="noopener">＋ Adicionar ao Discord</a><a class="btn secondary" href="#comandos">Explorar comandos ↓</a></div>
+<div class="stat-grid"><div class="panel stat"><strong>Peixes</strong><span>Economia e transferências</span></div><div class="panel stat"><strong>Jogos</strong><span>Roleta e Diamantes</span></div><div class="panel stat"><strong>Moderação</strong><span>Ferramentas pro servidor</span></div></div></div>
+<div class="hero-art" aria-label="Arte abstrata da Special Core"><div class="orbit"></div><div class="core-logo">SC</div><div class="float-tag tag-one">✦ Economia virtual</div><div class="float-tag tag-two">⌘ Ferramentas Discord</div></div>
+</div></section>
+<section class="section container" id="comandos"><div class="section-head"><div><span class="eyebrow">Central de ajuda</span><h2 style="margin-top:14px">Comandos do Sharkot</h2><p>Todos os comandos listados aqui, com uma explicação rápida. Pesquise pelo nome ou filtre por categoria.</p></div></div>
+<div class="toolbar"><input class="search" id="commandSearch" type="search" placeholder="⌕  Buscar comando ou função..." aria-label="Buscar comandos"><select class="filter" id="categoryFilter" aria-label="Filtrar categoria"><option value="all">Todas as categorias</option><option value="peixes">Peixes</option><option value="jogos">Transferências e jogos</option><option value="servidor">Servidor e utilidades</option><option value="dono">Dono do servidor</option></select></div>
+<div id="commands">
+<section class="command-group" data-category="peixes"><div class="group-title"><span class="symbol">◈</span><div><h3>Peixes</h3><span class="muted">Saldo, carteira e movimentações</span></div></div><div class="command-grid">
+<article class="panel command" data-search="/atm membro saldo consultar"><code>/atm [membro]</code><p>Consulta seu saldo ou o saldo de outra pessoa.</p></article>
+<article class="panel command" data-search="/saldo saldo"><code>/saldo</code><p>Mostra quanto você tem disponível.</p></article>
+<article class="panel command" data-search="/carteira patrimônio reservado"><code>/carteira</code><p>Mostra saldo disponível, reservado e patrimônio total.</p></article>
+<article class="panel command" data-search="/extrato /historico histórico movimentações página"><code>/extrato [pagina] · /historico</code><p>Consulta suas movimentações financeiras.</p></article>
+<article class="panel command" data-search="/comprovante id recibo operação"><code>/comprovante &lt;id&gt;</code><p>Consulta o recibo de uma operação sua.</p></article>
+<article class="panel command" data-search="/atmglobal /ranking ranking classificação"><code>/atmglobal · /ranking</code><p>Mostra o ranking de Peixes, sem incluir o criador.</p></article>
+</div></section>
+<section class="command-group" data-category="jogos"><div class="group-title"><span class="symbol">♢</span><div><h3>Transferências e jogos</h3><span class="muted">Envie Peixes ou teste sua sorte</span></div></div><div class="command-grid">
+<article class="panel command" data-search="/pix /pagar /pay /transferir membro quantia enviar transferência"><code>/pix · /pagar · /pay · /transferir &lt;membro&gt; &lt;quantia&gt;</code><p>Envia Peixes para outro membro.</p></article>
+<article class="panel command" data-search="/roleta aposta tipo escolha número cor vermelho preto paridade dúzia"><code>/roleta &lt;aposta&gt; &lt;tipo&gt; &lt;escolha&gt;</code><p>Jogue na roleta europeia: número de 0 a 36, cor, paridade, faixa ou dúzia. Retorno total: 36× no número, 2× nas apostas externas e 3× na dúzia. O zero perde apostas externas.</p></article>
+<article class="panel command" data-search="/diamantes aposta bomba quadradinhos"><code>/diamantes &lt;aposta&gt;</code><p>Escolha entre cinco quadrados: diamante dobra a aposta; bomba faz você perder. Cada clique inicia uma nova aposta, e a chance diminui com apostas maiores e vitórias seguidas.</p></article>
+</div></section>
+<section class="command-group" data-category="servidor"><div class="group-title"><span class="symbol">⌘</span><div><h3>Servidor e utilidades</h3><span class="muted">Administração, informação e ferramentas</span></div></div><div class="command-grid">
+<article class="panel command" data-search="/ping resposta bot"><code>/ping</code><p>Verifica se o bot está respondendo.</p></article>
+<article class="panel command" data-search="/texto mensagem moderadores administradores .fala"><code>/texto &lt;mensagem&gt; · .fala</code><p>Envia uma mensagem como o bot. Disponível para moderadores e administradores.</p></article>
+<article class="panel command" data-search="/call /saircall voz chamada moderadores"><code>/call · /saircall</code><p>Conecta ou desconecta o bot de uma call. Disponível para moderadores e administradores.</p></article>
+<article class="panel command" data-search="/embed embed personalizado"><code>/embed</code><p>Cria um embed personalizado.</p></article>
+<article class="panel command" data-search=".componente componente montador DM texto título imagem autor rodapé"><code>.componente</code><p>Abre um montador privado por DM com texto, título, imagem, autor e rodapé. Depois publica no canal e tenta apagar a mensagem do comando, se tiver permissão.</p></article>
+<article class="panel command" data-search=".ticket /ticket tickets equipe categoria painel"><code>.ticket · /ticket</code><p>Permite que administradores e moderadores cadastrados configurem um painel com até cinco tipos de ticket, cargos da equipe e categoria.</p></article>
+<article class="panel command" data-search="/ban membro motivo banir confirmação"><code>/ban &lt;membro&gt; [motivo]</code><p>Bane um membro após confirmação. O motivo é opcional e exige a permissão correspondente.</p></article>
+<article class="panel command" data-search="/kick membro motivo expulsar confirmação"><code>/kick &lt;membro&gt; [motivo]</code><p>Expulsa um membro após confirmação. O motivo é opcional e exige a permissão correspondente.</p></article>
+<article class="panel command" data-search="/unban usuário motivo banimento banir membros"><code>/unban &lt;usuario&gt; [motivo]</code><p>Remove o banimento de um usuário. Exige a permissão Banir membros.</p></article>
+<article class="panel command" data-search="/warn usuário motivo aviso"><code>/warn &lt;usuario&gt; [motivo]</code><p>Registra um aviso para uso da moderação e administração.</p></article>
+<article class="panel command" data-search="/warnings /warninigs avisos consultar"><code>/warnings &lt;usuario&gt; · /warninigs</code><p>Consulta os avisos de um usuário. A grafia alternativa também funciona.</p></article>
+<article class="panel command" data-search="/timeout /untimeout /purge /slowmode /userinfo /serverinfo /poll ferramentas"><code>/timeout · /untimeout · /purge · /slowmode · /userinfo · /serverinfo · /poll</code><p>Ferramentas adicionais para controlar mensagens, tempo limite, usuários, servidor e enquetes.</p></article>
+<article class="panel command" data-search=".somar conta matemática cálculo"><code>.somar &lt;conta&gt;</code><p>Calcula operações matemáticas básicas.</p></article>
+<article class="panel command" data-search=".enviar_embed legado"><code>.enviar_embed</code><p>Comando legado para envio de embed.</p></article>
+<article class="panel command" data-search="prefixo ponto híbridos . comandos"><code>Prefixo <b>.</b></code><p>Os comandos híbridos também podem ser usados com prefixo ponto (.).</p></article>
+</div></section>
+<section class="command-group" data-category="dono"><div class="group-title"><span class="symbol">♜</span><div><h3>Dono do servidor</h3><span class="muted">Gerenciamento de moderadores</span></div></div><div class="command-grid">
+<article class="panel command" data-search="/mod membro adicionar moderador dono"><code>/mod &lt;membro&gt;</code><p>Adiciona um moderador ao sistema do bot. Somente o dono do servidor pode usar.</p></article>
+<article class="panel command" data-search="/unmod membro remover moderador dono"><code>/unmod &lt;membro&gt;</code><p>Remove um moderador do sistema do bot. Somente o dono do servidor pode usar.</p></article>
+</div></section>
+</div><div class="panel empty" id="emptyState">Nenhum comando encontrado. Tente outro termo.</div>
+</section>
+<section class="section container"><div class="panel cta"><div><h2>Deixe o perfil com a sua cara.</h2><p>Veja as opções de personalização e conheça os benefícios VIP.</p></div><div class="hero-actions"><a class="btn secondary" href="perfil.html">Personalizar perfil ↗</a><a class="btn" href="premium.html">Conhecer Premium ✦</a></div></div></section>
+</main>
+<footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">Special Core™ · Sharkot</div><div>Feito por <strong>7mr.sam7</strong>. Todos os direitos reservados. © <span id="year"></span></div></div><div><a href="https://discord.com/terms" target="_blank" rel="noopener">Termos do Discord</a> · <a href="premium.html">Premium</a> · <a href="perfil.html">Perfil</a></div></div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+document.getElementById('year').textContent=new Date().getFullYear();
+const search=document.getElementById('commandSearch'),filter=document.getElementById('categoryFilter'),groups=[...document.querySelectorAll('.command-group')],cards=[...document.querySelectorAll('.command')],empty=document.getElementById('emptyState');
+function filterCommands(){let q=search.value.toLowerCase().trim(),cat=filter.value,visible=0;groups.forEach(g=>{let groupVisible=0;const categoryOK=cat==='all'||g.dataset.category===cat;g.querySelectorAll('.command').forEach(c=>{let ok=categoryOK&&((c.innerText+' '+(c.dataset.search||'')).toLowerCase().includes(q));c.classList.toggle('hidden',!ok);if(ok){visible++;groupVisible++}});g.classList.toggle('hidden',groupVisible===0)});empty.style.display=visible?'none':'block'}
+search.addEventListener('input',filterCommands);filter.addEventListener('change',filterCommands);
+</script>
+</body></html>
