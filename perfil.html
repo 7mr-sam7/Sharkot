@@ -3,36 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharkot - Perfil Personalizável</title>
+    <title>Sharkot - Perfil</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="profile-bg-convencional" id="main-background"> <!-- O fundo branco (convencional muda cor, premium muda cor/foto/GIF) -->
+<body>
 
-    <div class="profile-wrapper">
-        
-        <!-- BANNER 1 (Bloco Rosa do modelo) -->
-        <div class="banner-block banner-rosa" id="banner-1">
-            <!-- Convencional: Apenas cor sólida. Premium: Até 3 imagens/GIFs ou cor -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">Sharkot</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="perfil.html" class="active">Perfil</a></li>
+                <li><a href="premium.html">Premium</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="profile-wrapper">
+            <!-- BANNER 1 (Rosa Cyber) -->
+            <div class="banner-block banner-rosa" id="banner-1"></div>
+
+            <!-- FOTO CENTRAL (A Bola com Borda Neon) -->
+            <div class="profile-avatar-container" id="avatar-container">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" alt="Foto de Perfil" id="avatar-img">
+            </div>
+
+            <!-- BANNER 2 (Azul Frutiger Aero) -->
+            <div class="banner-block banner-azul" id="banner-2"></div>
         </div>
 
-        <!-- FOTO CENTRAL (A Bola Verde do modelo) -->
-        <div class="profile-avatar-container" id="avatar-container" style="background-color: #00ff00;">
-            <!-- Convencional: Foto estática + cor da bola. Premium: GIF na foto + cor -->
-            <img src="default-avatar.png" alt="Foto de Perfil" id="avatar-img">
+        <div class="profile-info-card">
+            <h2>7mr-sam7</h2>
+            <p class="badge-status">Membro Convencional · <a href="premium.html">Quero ser VIP ✨</a></p>
         </div>
+    </main>
 
-        <!-- BANNER 2 (Bloco Azul do modelo) -->
-        <div class="banner-block banner-azul" id="banner-2">
-            <!-- Convencional: Apenas cor sólida. Premium: Até 3 imagens/GIFs ou cor -->
-        </div>
-
-    </div>
-
-    <!-- Informações básicas do usuário -->
-    <div class="profile-info-card">
-        <h2>7mr-sam7</h2>
-        <p class="badge-status">Membro Convencional / <a href="premium.html">Seja Premium</a></p>
-    </div>
-
+    <footer>
+        <p>&copy; 2026 Sharkot. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
