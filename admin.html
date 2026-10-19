@@ -3,46 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharkot - Painel Admin</title>
+    <title>Sharkot - Painel Administrativo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="admin-body">
-    <aside class="sidebar">
-        <!-- LOCAL DA LOGO DO ADMIN DA SPECIAL CORE -->
-        <div class="admin-logo-container">
-            <img src="logo-admin-special-core.png" alt="Logo Admin Special Core" id="admin-logo">
+
+    <!-- TELA DE LOGIN DO ADMIN (Caso não esteja logado ou autorizado) -->
+    <div id="auth-gate" class="auth-gate-container">
+        <div class="auth-box">
+            <h2>Painel Restrito - Sharkot</h2>
+            <p>Faça login com sua conta autorizada para continuar.</p>
+            <button id="login-google-btn" class="btn-primary" onclick="simularLoginGoogle()">Entrar com o Google</button>
+            <p id="auth-error" class="error-msg" style="color: red; display: none;">Acesso negado. Apenas o criador ou e-mails autorizados podem acessar.</p>
         </div>
-        <ul class="admin-menu">
-            <li><a href="#" class="active">Dashboard</a></li>
-            <li><a href="#">Usuários</a></li>
-            <li><a href="#">Configurações</a></li>
-            <li><a href="index.html">Sair</a></li>
-        </ul>
-    </aside>
+    </div>
 
-    <main class="admin-content">
-        <header class="admin-header">
-            <!-- LOCAL DA LOGO DA SPECIAL CORE CONVENCIONAL -->
-            <div class="brand-logo-container">
-                <img src="logo-special-core.png" alt="Logo Special Core" id="brand-logo">
+    <!-- CONTEÚDO DO PAINEL (Exibido apenas para autorizados) -->
+    <div id="admin-dashboard" style="display: none;" class="admin-main-layout">
+        <aside class="sidebar">
+            <div class="admin-logo-container">
+                <img src="logo-admin-special-core.png" alt="Logo Admin Special Core" id="admin-logo">
             </div>
-            <h2>Painel Administrativo</h2>
-        </header>
+            <ul class="admin-menu">
+                <li><a href="#" class="active" onclick="mostrarSecao('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="mostrarSecao('usuarios')">Gerenciar Usuários & Permissões</a></li>
+                <li><a href="index.html">Voltar ao Início</a></li>
+            </ul>
+        </aside>
 
-        <section class="dashboard-grid">
-            <div class="dash-card">
-                <h3>Usuários Totais</h3>
-                <p>1,240</p>
-            </div>
-            <div class="dash-card">
-                <h3>Assinantes Premium</h3>
-                <p>320</p>
-            </div>
-            <div class="dash-card">
-                <h3>Status do Servidor</h3>
-                <p class="status-online">Online</p>
-            </div>
-        </section>
-    </main>
+        <main class="admin-content">
+            <header class="admin-header">
+                <div class="brand-logo-container">
+                    <img src="logo-special-core.png" alt="Logo Special Core" id="brand-logo">
+                </div>
+                <h2>Painel Administrativo - Special Core</h2>
+                <span id="user-logged-email" class="logged-email-badge"></span>
+            </header>
+
+            <!-- SEÇÃO DASHBOARD -->
+            <section id="secao-dashboard" class="dashboard-section">
+                <div class="dashboard-grid">
+                    <div class="dash-card">
+                        <h3>Usuários Totais</h3>
+                        <p>1,240</p>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Membros Premium</h3>
+                        <p>320 (Incluindo Criador)</p>
+                    </div>
+                    <div class="dash-card">
+                        <h3>Status do Bot</h3>
+                        <p class="status-online">Online (v0.1.0-alpha)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO GERENCIAR USUÁRIOS E PERMISSÕES (Com caixinhas de seleção) -->
+            <section id="secao-usuarios" class="dashboard-section" style="display: none;">
+                <h3>Gerenciamento de Acessos e Permissões</h3>
+                <p>Selecione o que cada usuário ou e-mail autorizado pode fazer no painel:</p>
+
+                <div class="user-permission-card">
+                    <h4>Criador: 7mr-sam7 (gx009er@gmail.com)</h4>
+                    <p><strong>Cargo:</strong> Dono / Criador (Acesso Total Vitalício + Premium)</p>
+                    <div class="permissions-checkboxes">
+                        <label><input type="checkbox" checked disabled> Acessar Painel</label>
+                        <label><input type="checkbox" checked disabled> Mexer em Configurações</label>
+                        <label><input type="checkbox" checked disabled> Conceder Premium</label>
+                    </div>
+                </div>
+
+                <!-- Exemplo de outro usuário gerenciável na lista -->
+                <div class="user-permission-card">
+                    <h4>Moderador Exemplo (exemplo@gmail.com)</h4>
+                    <div class="permissions-checkboxes">
+                        <label><input type="checkbox" checked> Acessar Painel (Somente Ver)</label>
+                        <label><input type="checkbox"> Mexer em Configurações</label>
+                        <label><input type="checkbox"> Conceder Premium</label>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Script básico de simulação de controle de acesso para o seu Gmail -->
+    <script>
+        const CRIADOR_EMAIL = "gx009er@gmail.com";
+
+        function simularLoginGoogle() {
+            // Aqui simula a captura do e-mail logado (No seu caso, validando o seu Gmail)
+            let emailLogado = prompt("Digite o seu e-mail do Google para entrar no Admin:", "gx009er@gmail.com");
+
+            if (emailLogado === CRIADOR_EMAIL || emailLogado === "admin-autorizado@gmail.com") {
+                document.getElementById('auth-gate').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'flex';
+                document.getElementById('user-logged-email').innerText = "Logado como: " + emailLogado;
+            } else {
+                document.getElementById('auth-error').style.display = 'block';
+            }
+        }
+
+        function mostrarSecao(secao) {
+            if (secao === 'dashboard') {
+                document.getElementById('secao-dashboard').style.display = 'block';
+                document.getElementById('secao-usuarios').style.display = 'none';
+            } else if (secao === 'usuarios') {
+                document.getElementById('secao-dashboard').style.display = 'none';
+                document.getElementById('secao-usuarios').style.display = 'block';
+            }
+        }
+    </script>
 </body>
 </html>
