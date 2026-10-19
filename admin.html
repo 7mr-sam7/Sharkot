@@ -1,117 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharkot - Painel Administrativo</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="admin-body">
-
-    <!-- TELA DE LOGIN DO ADMIN (Caso não esteja logado ou autorizado) -->
-    <div id="auth-gate" class="auth-gate-container">
-        <div class="auth-box">
-            <h2>Painel Restrito - Sharkot</h2>
-            <p>Faça login com sua conta autorizada para continuar.</p>
-            <button id="login-google-btn" class="btn-primary" onclick="simularLoginGoogle()">Entrar com o Google</button>
-            <p id="auth-error" class="error-msg" style="color: red; display: none;">Acesso negado. Apenas o criador ou e-mails autorizados podem acessar.</p>
-        </div>
-    </div>
-
-    <!-- CONTEÚDO DO PAINEL (Exibido apenas para autorizados) -->
-    <div id="admin-dashboard" style="display: none;" class="admin-main-layout">
-        <aside class="sidebar">
-            <div class="admin-logo-container">
-                <img src="logo-admin-special-core.png" alt="Logo Admin Special Core" id="admin-logo">
-            </div>
-            <ul class="admin-menu">
-                <li><a href="#" class="active" onclick="mostrarSecao('dashboard')">Dashboard</a></li>
-                <li><a href="#" onclick="mostrarSecao('usuarios')">Gerenciar Usuários & Permissões</a></li>
-                <li><a href="index.html">Voltar ao Início</a></li>
-            </ul>
-        </aside>
-
-        <main class="admin-content">
-            <header class="admin-header">
-                <div class="brand-logo-container">
-                    <img src="logo-special-core.png" alt="Logo Special Core" id="brand-logo">
-                </div>
-                <h2>Painel Administrativo - Special Core</h2>
-                <span id="user-logged-email" class="logged-email-badge"></span>
-            </header>
-
-            <!-- SEÇÃO DASHBOARD -->
-            <section id="secao-dashboard" class="dashboard-section">
-                <div class="dashboard-grid">
-                    <div class="dash-card">
-                        <h3>Usuários Totais</h3>
-                        <p>1,240</p>
-                    </div>
-                    <div class="dash-card">
-                        <h3>Membros Premium</h3>
-                        <p>320 (Incluindo Criador)</p>
-                    </div>
-                    <div class="dash-card">
-                        <h3>Status do Bot</h3>
-                        <p class="status-online">Online (v0.1.0-alpha)</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SEÇÃO GERENCIAR USUÁRIOS E PERMISSÕES (Com caixinhas de seleção) -->
-            <section id="secao-usuarios" class="dashboard-section" style="display: none;">
-                <h3>Gerenciamento de Acessos e Permissões</h3>
-                <p>Selecione o que cada usuário ou e-mail autorizado pode fazer no painel:</p>
-
-                <div class="user-permission-card">
-                    <h4>Criador: 7mr-sam7 (gx009er@gmail.com)</h4>
-                    <p><strong>Cargo:</strong> Dono / Criador (Acesso Total Vitalício + Premium)</p>
-                    <div class="permissions-checkboxes">
-                        <label><input type="checkbox" checked disabled> Acessar Painel</label>
-                        <label><input type="checkbox" checked disabled> Mexer em Configurações</label>
-                        <label><input type="checkbox" checked disabled> Conceder Premium</label>
-                    </div>
-                </div>
-
-                <!-- Exemplo de outro usuário gerenciável na lista -->
-                <div class="user-permission-card">
-                    <h4>Moderador Exemplo (exemplo@gmail.com)</h4>
-                    <div class="permissions-checkboxes">
-                        <label><input type="checkbox" checked> Acessar Painel (Somente Ver)</label>
-                        <label><input type="checkbox"> Mexer em Configurações</label>
-                        <label><input type="checkbox"> Conceder Premium</label>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Script básico de simulação de controle de acesso para o seu Gmail -->
-    <script>
-        const CRIADOR_EMAIL = "gx009er@gmail.com";
-
-        function simularLoginGoogle() {
-            // Aqui simula a captura do e-mail logado (No seu caso, validando o seu Gmail)
-            let emailLogado = prompt("Digite o seu e-mail do Google para entrar no Admin:", "gx009er@gmail.com");
-
-            if (emailLogado === CRIADOR_EMAIL || emailLogado === "admin-autorizado@gmail.com") {
-                document.getElementById('auth-gate').style.display = 'none';
-                document.getElementById('admin-dashboard').style.display = 'flex';
-                document.getElementById('user-logged-email').innerText = "Logado como: " + emailLogado;
-            } else {
-                document.getElementById('auth-error').style.display = 'block';
-            }
-        }
-
-        function mostrarSecao(secao) {
-            if (secao === 'dashboard') {
-                document.getElementById('secao-dashboard').style.display = 'block';
-                document.getElementById('secao-usuarios').style.display = 'none';
-            } else if (secao === 'usuarios') {
-                document.getElementById('secao-dashboard').style.display = 'none';
-                document.getElementById('secao-usuarios').style.display = 'block';
-            }
-        }
-    </script>
-</body>
-</html>
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080910"><title>Administração — Special Core</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="site-header"><nav class="nav container"><a class="brand" href="index.html"><span class="brand-mark">SC</span><span>Special Core<small>PAINEL ADMINISTRATIVO</small></span></a><div class="nav-links"><a href="index.html">Início</a><a href="perfil.html">Perfil</a><a href="premium.html">Premium</a><a class="active" href="admin.html">Admin</a></div></nav></header>
+<main class="container"><section class="page-hero"><span class="eyebrow">Área restrita · Interface de demonstração</span><h1>Controle central da <span class="gradient">Special Core.</span></h1><p class="lead">Gerencie registros de Premium e monte permissões por Gmail. Esta versão é somente a interface local; ainda não autentica contas Google nem aplica alterações ao bot.</p></section>
+<div class="admin-warning"><strong>Segurança:</strong> como o site está no GitHub Pages, os dados e permissões abaixo ficam apenas neste navegador e podem ser alterados por quem tiver acesso a ele. Não use esta demonstração para confiar acesso real. Para produção, conecte Google Sign-In e uma API/backend que valide permissões no servidor. Seu Gmail principal configurado na interface: <strong>gx009er@gmail.com</strong>.</div>
+<div class="admin-layout"><aside class="panel admin-side"><a href="#resumo">▦ Resumo</a><a href="#premium-admin">✦ Gerenciar Premium</a><a href="#permissoes">♙ Permissões</a><a href="#registros">≡ Registros locais</a></aside>
+<div class="panel admin-main"><section id="resumo"><h2>Visão geral</h2><p class="muted">Os números abaixo refletem somente registros salvos neste navegador.</p><div class="stat-grid"><div class="panel stat"><strong id="totalPremium">0</strong><span>Registros VIP ativos</span></div><div class="panel stat"><strong id="totalStaff">0</strong><span>Gmails autorizados</span></div><div class="panel stat"><strong>LOCAL</strong><span>Modo de armazenamento</span></div></div></section>
+<section id="premium-admin" class="mt-20"><h2>Gerenciar Premium</h2><p class="muted">Registre uma ativação ou remoção manual. Isso não altera o banco do Sharkot.</p><form id="premiumForm" class="form-grid"><div class="field"><label for="vipEmail">Gmail da pessoa</label><input id="vipEmail" type="email" required placeholder="pessoa@gmail.com"></div><div class="field"><label for="vipStatus">Ação</label><select id="vipStatus"><option value="active">Conceder Premium</option><option value="inactive">Remover Premium</option></select></div><div class="field"><label for="vipDuration">Duração / observação</label><input id="vipDuration" placeholder="Ex.: 30 dias, compra verificada"></div><div class="field"><label for="vipDiscord">Discord / ID (opcional)</label><input id="vipDiscord" placeholder="Usuário ou ID do Discord"></div><div class="field full"><label for="vipNotes">Notas administrativas</label><textarea id="vipNotes" rows="2" placeholder="Anotação interna para você..."></textarea></div><div class="field full"><button class="btn" type="submit">Salvar registro local</button></div></form></section>
+<section id="permissoes" class="mt-20"><h2>Permissões por Gmail</h2><p class="muted">Marque exatamente o que a pessoa poderá fazer na versão real do painel.</p><form id="staffForm"><div class="form-grid"><div class="field"><label for="staffEmail">Gmail autorizado</label><input id="staffEmail" type="email" required placeholder="colaborador@gmail.com"></div><div class="field"><label for="staffRole">Modelo rápido</label><select id="staffRole"><option value="custom">Personalizado</option><option value="view">Somente visualizar</option><option value="premium">Gerenciar Premium</option><option value="full">Acesso total</option></select></div></div>
+<div class="permission-grid">
+<label class="permission"><input type="checkbox" name="perm" value="view_dashboard"><span><strong>Visualizar painel</strong><br><span class="muted">Ver páginas e resumo administrativo.</span></span></label>
+<label class="permission"><input type="checkbox" name="perm" value="view_users"><span><strong>Visualizar usuários</strong><br><span class="muted">Consultar registros e informações permitidas.</span></span></label>
+<label class="permission"><input type="checkbox" name="perm" value="grant_premium"><span><strong>Conceder Premium</strong><br><span class="muted">Registrar ativação de VIP.</span></span></label>
+<label class="permission"><input type="checkbox" name="perm" value="remove_premium"><span><strong>Remover Premium</strong><br><span class="muted">Registrar remoção de VIP.</span></span></label>
+<label class="permission"><input type="checkbox" name="perm" value="manage_staff"><span><strong>Gerenciar equipe</strong><br><span class="muted">Criar e alterar permissões de outros colaboradores.</span></span></label>
+<label class="permission"><input type="checkbox" name="perm" value="edit_site"><span><strong>Editar configurações do site</strong><br><span class="muted">Alterar configurações autorizadas.</span></span></label>
+<label class="permission"><input type="checkbox" name="perm" value="full_access"><span><strong>Acesso total</strong><br><span class="muted">Permissão ampla; conceda somente a pessoas confiáveis.</span></span></label>
+</div><div class="admin-actions"><button class="btn" type="submit">Salvar permissões localmente</button><button class="btn secondary" type="button" id="clearPerms">Limpar seleção</button></div></form></section>
+<section id="registros" class="mt-20"><h2>Registros locais</h2><div class="admin-actions"><button class="btn secondary small" id="exportData" type="button">Exportar JSON</button><button class="btn secondary small" id="clearData" type="button">Apagar todos os registros locais</button></div><div id="records" class="local-list"><p class="muted">Nenhum registro local por enquanto.</p></div></section>
+</div></div></main>
+<footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">Special Core™ · Sharkot</div><div>Feito por <strong>7mr.sam7</strong>. Todos os direitos reservados. © <span id="year"></span></div></div><div><a href="https://discord.com/terms" target="_blank" rel="noopener">Termos do Discord</a> · <a href="index.html">Início</a> · <a href="premium.html">Premium</a></div></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+const OWNER='gx009er@gmail.com',KEY='sc-admin-demo-v1',$=id=>document.getElementById(id);$('year').textContent=new Date().getFullYear();
+let data={premium:[],staff:[]};try{data=Object.assign(data,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function render(){$('totalPremium').textContent=data.premium.filter(x=>x.status==='active').length;$('totalStaff').textContent=data.staff.length;const box=$('records');box.innerHTML='';const all=[...data.premium.map(x=>({...x,type:'Premium'})),...data.staff.map(x=>({...x,type:'Permissões'}))];if(!all.length){box.innerHTML='<p class="muted">Nenhum registro local por enquanto.</p>';return}all.forEach((r,i)=>{const item=document.createElement('div');item.className='local-item';const info=document.createElement('div');const title=document.createElement('strong');title.textContent=r.email+' · '+r.type;const sub=document.createElement('small');sub.textContent=r.type==='Premium'?((r.status==='active'?'VIP ativo':'VIP removido')+' · '+(r.duration||'sem observação')):('Permissões: '+(r.permissions||[]).join(', '));info.append(title,sub);const del=document.createElement('button');del.className='btn secondary small';del.textContent='Excluir';del.type='button';del.addEventListener('click',()=>{if(r.type==='Premium')data.premium.splice(data.premium.findIndex(x=>x.id===r.id),1);else data.staff.splice(data.staff.findIndex(x=>x.id===r.id),1);save();toast('Registro local excluído.')});item.append(info,del);box.append(item)})}
+$('premiumForm').addEventListener('submit',e=>{e.preventDefault();const email=$('vipEmail').value.trim().toLowerCase();if(!email)return;data.premium.unshift({id:Date.now(),email,status:$('vipStatus').value,duration:$('vipDuration').value.trim(),discord:$('vipDiscord').value.trim(),notes:$('vipNotes').value.trim(),by:OWNER,created:new Date().toISOString()});save();e.target.reset();toast('Registro salvo apenas neste navegador.')});
+const perms=[...document.querySelectorAll('input[name="perm"]')];
+$('staffRole').addEventListener('change',()=>{const role=$('staffRole').value;const map={view:['view_dashboard','view_users'],premium:['view_dashboard','view_users','grant_premium','remove_premium'],full:perms.map(p=>p.value),custom:[]};perms.forEach(p=>p.checked=map[role].includes(p.value))});
+$('staffForm').addEventListener('submit',e=>{e.preventDefault();const email=$('staffEmail').value.trim().toLowerCase();const selected=perms.filter(p=>p.checked).map(p=>p.value);if(!selected.length){toast('Marque pelo menos uma permissão.');return}if(email===OWNER){toast('Esse é o Gmail principal do proprietário.');return}const existing=data.staff.findIndex(x=>x.email===email);const item={id:Date.now(),email,permissions:selected,by:OWNER,created:new Date().toISOString()};if(existing>=0)data.staff[existing]=item;else data.staff.unshift(item);save();toast('Permissões salvas localmente.');});
+$('clearPerms').addEventListener('click',()=>perms.forEach(p=>p.checked=false));
+$('clearData').addEventListener('click',()=>{if(confirm('Apagar todos os registros guardados neste navegador?')){data={premium:[],staff:[]};save();toast('Registros locais apagados.')}});
+$('exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='special-core-admin-local.json';a.click();URL.revokeObjectURL(url)});
+render();
+</script></body></html>
