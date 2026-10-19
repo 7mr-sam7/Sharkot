@@ -20,9 +20,51 @@
 
     <main class="container">
         <section class="hero">
-            <h1>Bem-vindo ao Sharkot</h1>
-            <p>O site oficial do projeto. Explore as novidades e aproveite nossos recursos.</p>
+            <h1>Special Core · v0.1.0-alpha</h1>
+            <p>Confira abaixo a lista completa de comandos disponíveis no bot!</p>
             <a href="premium.html" class="btn-primary">Seja Premium</a>
+        </section>
+
+        <!-- SEÇÃO DE COMANDOS -->
+        <section class="commands-section">
+            
+            <h2>🐟 Peixes (Economia)</h2>
+            <div class="command-grid">
+                <div class="cmd-card"><code>/atm [membro]</code><p>Consulta seu saldo ou o de alguém.</p></div>
+                <div class="cmd-card"><code>/saldo</code><p>Consulta seu saldo atual.</p></div>
+                <div class="cmd-card"><code>/carteira</code><p>Mostra saldo disponível, reservado e patrimônio.</p></div>
+                <div class="cmd-card"><code>/extrato [pagina]</code> / <code>/historico</code><p>Consultam movimentações financeiras.</p></div>
+                <div class="cmd-card"><code>/comprovante &lt;id&gt;</code><p>Consulta um recibo de uma operação sua.</p></div>
+                <div class="cmd-card"><code>/atmglobal</code> / <code>/ranking</code><p>Mostram o ranking de economia (sem o criador).</p></div>
+            </div>
+
+            <h2>🎲 Transferências e Jogos</h2>
+            <div class="command-grid">
+                <div class="cmd-card"><code>/pix</code> / <code>/pagar</code> / <code>/pay</code> / <code>/transferir</code><p>Envia Peixes para outro membro.</p></div>
+                <div class="cmd-card"><code>/roleta &lt;aposta&gt; &lt;tipo&gt; &lt;escolha&gt;</code><p>Joga roleta europeia (36x número, 2x cor/paridade/faixa, 3x dúzia; zero perde apostas externas).</p></div>
+                <div class="cmd-card"><code>/diamantes &lt;aposta&gt;</code><p>Escolhe um quadradinho: diamante dobra a aposta, bomba perde tudo.</p></div>
+            </div>
+
+            <h2>🛠️ Servidor e Utilidades</h2>
+            <div class="command-grid">
+                <div class="cmd-card"><code>/ping</code><p>Verifica se o bot está respondendo.</p></div>
+                <div class="cmd-card"><code>/texto &lt;mensagem&gt;</code> (ou <code>.fala</code>)<p>Envia texto como o bot (Mod/Admin).</p></div>
+                <div class="cmd-card"><code>/call</code> / <code>/saircall</code><p>Conecta ou desconecta o bot da sua call (Mod/Admin).</p></div>
+                <div class="cmd-card"><code>/embed</code> / <code>.enviar_embed</code><p>Cria um embed personalizado.</p></div>
+                <div class="cmd-card"><code>.componente</code><p>Abre por DM um montador privado de mensagens completas.</p></div>
+                <div class="cmd-card"><code>.ticket</code> / <code>/ticket</code><p>Configura painel de atendimento com até 5 tipos de ticket (Mod/Admin).</p></div>
+                <div class="cmd-card"><code>/ban</code> / <code>/kick</code> / <code>/unban</code><p>Gerencia banimentos e expulsões no servidor com confirmação.</p></div>
+                <div class="cmd-card"><code>/warn</code> / <code>/warnings</code><p>Registra e consulta avisos de usuários.</p></div>
+                <div class="cmd-card"><code>Ferramentas Gerais</code><p><code>/timeout</code>, <code>/untimeout</code>, <code>/purge</code>, <code>/slowmode</code>, <code>/userinfo</code>, <code>/serverinfo</code> e <code>/poll</code>.</p></div>
+                <div class="cmd-card"><code>.somar &lt;conta&gt;</code><p>Calcula operações matemáticas básicas.</p></div>
+            </div>
+
+            <h2>👑 Dono do Servidor</h2>
+            <div class="command-grid">
+                <div class="cmd-card"><code>/mod &lt;membro&gt;</code><p>Adiciona um moderador (exclusivo do Dono).</p></div>
+                <div class="cmd-card"><code>/unmod &lt;membro&gt;</code><p>Remove um moderador (exclusivo do Dono).</p></div>
+            </div>
+
         </section>
     </main>
 
