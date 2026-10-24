@@ -1,41 +1,495 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080910"><title>Perfil — Special Core</title><link rel="stylesheet" href="style.css"></head>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080910">
+  <title>Perfil — Special Core</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ========== PREVIEW DO PERFIL (baseado no modelo) ========== */
+    .profile-wrap {
+      display: grid;
+      gap: 32px;
+    }
+
+    .profile-preview {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 4 / 3;
+      margin: 0 auto;
+      background: var(--profile-bg, #ffffff);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Blocos geométricos */
+    .shape {
+      position: absolute;
+    }
+
+    /* Rosa superior (esquerda) */
+    .shape-pink-top {
+      top: 0;
+      left: 0;
+      width: 62%;
+      height: 48%;
+      background: var(--pink-a, #ff16d9);
+    }
+
+    /* Rosa inferior (direita) */
+    .shape-pink-bottom {
+      bottom: 0;
+      right: 0;
+      width: 58%;
+      height: 42%;
+      background: var(--pink-b, #ff16d9);
+    }
+
+    /* Azul esquerdo */
+    .shape-blue-left {
+      bottom: 18%;
+      left: 8%;
+      width: 28%;
+      height: 32%;
+      background: var(--banner, #4d27ff);
+    }
+
+    /* Azul direito */
+    .shape-blue-right {
+      top: 38%;
+      right: 6%;
+      width: 32%;
+      height: 36%;
+      background: var(--banner, #4d27ff);
+    }
+
+    /* Avatar (círculo verde no modelo) */
+    .profile-avatar {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 38%;
+      max-width: 160px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #1a1a2e;
+      border: 6px solid var(--profile-bg, #ffffff);
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      z-index: 10;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      border-radius: 50%;
+    }
+
+    .avatar-placeholder {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #999;
+      text-align: center;
+      padding: 10px;
+      line-height: 1.3;
+    }
+
+    /* Controles */
+    .profile-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .control-card {
+      padding: 16px;
+    }
+
+    .control-card label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .control-card input[type="file"],
+    .control-card input[type="color"] {
+      width: 100%;
+    }
+
+    .control-card input[type="color"] {
+      height: 42px;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #333;
+      background: #111;
+      cursor: pointer;
+    }
+
+    .vip-lock {
+      margin-top: 6px;
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      background: rgba(139, 92, 246, 0.08);
+    }
+
+    .vip-lock strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #c4b5fd;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 560px) {
+      .profile-preview {
+        max-width: 100%;
+      }
+      .profile-avatar {
+        width: 42%;
+      }
+    }
+  </style>
+</head>
 <body>
-<header class="site-header"><nav class="nav container"><a class="brand" href="index.html"><span class="brand-mark">SC</span><span>Special Core<small>SHARKOT · PERFIL</small></span></a><div class="nav-links"><a href="index.html">Início</a><a class="active" href="perfil.html">Perfil</a><a href="premium.html">Premium</a><a href="admin.html">Admin</a></div></nav></header>
-<main class="container">
-<section class="page-hero"><span class="eyebrow">Identidade visual</span><h1>Seu perfil, <span class="gradient">suas regras.</span></h1><p class="lead">Monte e salve uma prévia neste navegador, incluindo avatar e banner. Isso ainda não publica as mudanças no Discord nem sincroniza entre dispositivos.</p></section>
-<section class="panel profile-wrap"><div class="profile-preview" id="profilePreview"><div class="profile-pink-a" id="pinkTop"></div><div class="profile-banner" id="bannerArea"></div><div class="profile-pink-b" id="pinkBottom"></div><div class="profile-avatar" id="avatarBox"><span class="avatar-placeholder" id="avatarPlaceholder">SUA FOTO</span><img id="avatarImg" alt="Prévia do avatar"></div></div>
-<div class="profile-controls">
-<div class="panel control-card"><label for="avatarFile">Foto de perfil (VIP)</label><input type="file" id="avatarFile" accept="image/*"><p class="hint">Aceita imagens e GIF. A prévia pode ser salva neste navegador.</p></div>
-<div class="panel control-card"><label for="bannerColor">Cor do banner azul</label><input type="color" id="bannerColor" value="#4d27ff"></div>
-<div class="panel control-card"><label for="pinkAColor">Cor rosa superior</label><input type="color" id="pinkAColor" value="#ff16d9"></div>
-<div class="panel control-card"><label for="pinkBColor">Cor rosa inferior</label><input type="color" id="pinkBColor" value="#ff16d9"></div>
-<div class="panel control-card"><label for="backgroundColor">Cor do fundo</label><input type="color" id="backgroundColor" value="#ffffff"></div>
-<div class="panel control-card"><label for="bannerFile">Imagem/GIF de banner (VIP)</label><input type="file" id="bannerFile" accept="image/*"><p class="hint">A imagem cobre a área azul. GIFs também são aceitos.</p></div>
-</div>
-<div class="vip-lock"><strong>✦ Recursos VIP</strong><p class="muted">A personalização complexa, avatar animado e imagens/GIFs nas áreas do banner fazem parte da proposta Premium. Nesta versão, tudo é apenas uma prévia local; nada é enviado ao Sharkot.</p><a class="btn small" href="premium.html">Ver Premium ↗</a></div>
-<div class="admin-actions"><button class="btn secondary" id="resetProfile" type="button">Restaurar visual</button><button class="btn" id="savePreview" type="button">Salvar perfil neste navegador</button></div>
-<p class="hint">O navegador guarda as cores e os arquivos escolhidos usando armazenamento local. Arquivos muito grandes podem exceder o espaço disponível; isso não é um armazenamento online.</p>
-</section></main>
-<footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">Special Core™ · Sharkot</div><div>Feito por <strong>7mr.sam7</strong>. Todos os direitos reservados. © <span id="year"></span></div></div><div><a href="https://discord.com/terms" target="_blank" rel="noopener">Termos do Discord</a> · <a href="index.html">Início</a> · <a href="premium.html">Premium</a></div></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script>
-const $=id=>document.getElementById(id), preview=$('profilePreview'), toast=$('toast');
-$('year').textContent=new Date().getFullYear();
-const DB_NAME='special-core-profile-v2', STORE='assets', COLORS_KEY='sc-profile-colors-v2';
-let avatarObjectUrl=null,bannerObjectUrl=null;
-function say(msg){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2800)}
-function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains(STORE))req.result.createObjectStore(STORE)};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
-async function putAsset(key,file){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put({blob:file,type:file.type,name:file.name},key);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
-async function getAsset(key){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readonly'),req=tx.objectStore(STORE).get(key);req.onsuccess=()=>{db.close();resolve(req.result||null)};req.onerror=()=>{db.close();reject(req.error)}})}
-async function deleteAssets(){const db=await openDB();return new Promise((resolve,reject)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
-function setColor(id,variable){$(id).addEventListener('input',()=>preview.style.setProperty(variable,$(id).value))}
-setColor('bannerColor','--banner');setColor('pinkAColor','--pink-a');setColor('pinkBColor','--pink-b');setColor('backgroundColor','--profile-bg');
-function showAvatar(file){if(avatarObjectUrl)URL.revokeObjectURL(avatarObjectUrl);avatarObjectUrl=URL.createObjectURL(file);$('avatarImg').src=avatarObjectUrl;$('avatarImg').style.display='block';$('avatarPlaceholder').style.display='none'}
-function showBanner(file){if(bannerObjectUrl)URL.revokeObjectURL(bannerObjectUrl);bannerObjectUrl=URL.createObjectURL(file);$('bannerArea').style.backgroundImage='url("'+bannerObjectUrl+'")';$('bannerArea').style.backgroundSize='cover';$('bannerArea').style.backgroundPosition='center'}
-$('avatarFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;if(!f.type.startsWith('image/'))return say('Escolha um arquivo de imagem ou GIF.');showAvatar(f);say('Avatar aplicado à prévia. Clique em salvar para guardar.')});
-$('bannerFile').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;if(!f.type.startsWith('image/'))return say('Escolha um arquivo de imagem ou GIF.');showBanner(f);say('Banner aplicado à prévia. Clique em salvar para guardar.')});
-$('savePreview').addEventListener('click',async()=>{try{const colors={banner:$('bannerColor').value,pinkA:$('pinkAColor').value,pinkB:$('pinkBColor').value,bg:$('backgroundColor').value};localStorage.setItem(COLORS_KEY,JSON.stringify(colors));const av=$('avatarFile').files[0],bn=$('bannerFile').files[0];if(av)await putAsset('avatar',av);if(bn)await putAsset('banner',bn);say('Perfil salvo neste navegador!')}catch(e){say('Não coube no armazenamento do navegador. Tente imagens menores.')}});
-async function restore(){const defaults={banner:'#4d27ff',pinkA:'#ff16d9',pinkB:'#ff16d9',bg:'#ffffff'};try{Object.assign(defaults,JSON.parse(localStorage.getItem(COLORS_KEY)||'{}'))}catch(e){}[['bannerColor','banner','--banner'],['pinkAColor','pinkA','--pink-a'],['pinkBColor','pinkB','--pink-b'],['backgroundColor','bg','--profile-bg']].forEach(([id,key,v])=>{$(id).value=defaults[key];preview.style.setProperty(v,defaults[key])});try{const av=await getAsset('avatar'),bn=await getAsset('banner');if(av?.blob)showAvatar(av.blob);if(bn?.blob)showBanner(bn.blob)}catch(e){/* armazenamento pode estar indisponível */}}
-$('resetProfile').addEventListener('click',async()=>{try{localStorage.removeItem(COLORS_KEY);await deleteAssets()}catch(e){}$('avatarFile').value='';$('bannerFile').value='';$('avatarImg').style.display='none';$('avatarPlaceholder').style.display='block';$('bannerArea').style.backgroundImage='';if(avatarObjectUrl)URL.revokeObjectURL(avatarObjectUrl);if(bannerObjectUrl)URL.revokeObjectURL(bannerObjectUrl);restore();say('Prévia restaurada.')});
-restore();
-</script></body></html>
+  <header class="site-header">
+    <nav class="nav container">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">SC</span>
+        <span>Special Core<small>SHARKOT · PERFIL</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Início</a>
+        <a class="active" href="perfil.html">Perfil</a>
+        <a href="premium.html">Premium</a>
+        <a href="admin.html">Admin</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-hero">
+      <span class="eyebrow">Identidade visual</span>
+      <h1>Seu perfil, <span class="gradient">suas regras.</span></h1>
+      <p class="lead">
+        Monte e salve uma prévia neste navegador, incluindo avatar e banner.
+        Isso ainda não publica as mudanças no Discord nem sincroniza entre dispositivos.
+      </p>
+    </section>
+
+    <section class="panel profile-wrap">
+      <!-- Prévia geométrica -->
+      <div class="profile-preview" id="profilePreview">
+        <div class="shape shape-pink-top" id="pinkTop"></div>
+        <div class="shape shape-pink-bottom" id="pinkBottom"></div>
+        <div class="shape shape-blue-left" id="blueLeft"></div>
+        <div class="shape shape-blue-right" id="blueRight"></div>
+
+        <div class="profile-avatar" id="avatarBox">
+          <span class="avatar-placeholder" id="avatarPlaceholder">SUA FOTO</span>
+          <img id="avatarImg" alt="Prévia do avatar">
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="profile-controls">
+        <div class="panel control-card">
+          <label for="avatarFile">Foto de perfil (VIP)</label>
+          <input type="file" id="avatarFile" accept="image/*">
+          <p class="hint">Aceita imagens e GIF.</p>
+        </div>
+
+        <div class="panel control-card">
+          <label for="bannerColor">Cor dos blocos azuis</label>
+          <input type="color" id="bannerColor" value="#4d27ff">
+        </div>
+
+        <div class="panel control-card">
+          <label for="pinkAColor">Cor rosa superior</label>
+          <input type="color" id="pinkAColor" value="#ff16d9">
+        </div>
+
+        <div class="panel control-card">
+          <label for="pinkBColor">Cor rosa inferior</label>
+          <input type="color" id="pinkBColor" value="#ff16d9">
+        </div>
+
+        <div class="panel control-card">
+          <label for="backgroundColor">Cor do fundo</label>
+          <input type="color" id="backgroundColor" value="#ffffff">
+        </div>
+
+        <div class="panel control-card">
+          <label for="bannerFile">Imagem/GIF nos blocos azuis (VIP)</label>
+          <input type="file" id="bannerFile" accept="image/*">
+          <p class="hint">A imagem é aplicada nos dois blocos azuis.</p>
+        </div>
+      </div>
+
+      <div class="vip-lock">
+        <strong>✦ Recursos VIP</strong>
+        <p class="muted">
+          A personalização complexa, avatar animado e imagens/GIFs nas áreas do banner
+          fazem parte da proposta Premium. Nesta versão, tudo é apenas uma prévia local;
+          nada é enviado ao Sharkot.
+        </p>
+        <a class="btn small" href="premium.html">Ver Premium ↗</a>
+      </div>
+
+      <div class="admin-actions">
+        <button class="btn secondary" id="resetProfile" type="button">Restaurar visual</button>
+        <button class="btn" id="savePreview" type="button">Salvar perfil neste navegador</button>
+      </div>
+
+      <p class="hint">
+        O navegador guarda as cores e os arquivos escolhidos usando armazenamento local.
+        Arquivos muito grandes podem exceder o espaço disponível.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-brand">Special Core™ · Sharkot</div>
+        <div>Feito por <strong>7mr.sam7</strong>. Todos os direitos reservados. © <span id="year"></span></div>
+      </div>
+      <div>
+        <a href="https://discord.com/terms" target="_blank" rel="noopener">Termos do Discord</a> ·
+        <a href="index.html">Início</a> ·
+        <a href="premium.html">Premium</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const $ = (id) => document.getElementById(id);
+
+      const preview = $('profilePreview');
+      const toast = $('toast');
+      const avatarImg = $('avatarImg');
+      const avatarPlaceholder = $('avatarPlaceholder');
+      const blueLeft = $('blueLeft');
+      const blueRight = $('blueRight');
+
+      const DB_NAME = 'special-core-profile-v2';
+      const STORE = 'assets';
+      const COLORS_KEY = 'sc-profile-colors-v2';
+
+      let avatarObjectUrl = null;
+      let bannerObjectUrl = null;
+
+      function say(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2800);
+      }
+
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(DB_NAME, 1);
+          request.onupgradeneeded = () => {
+            if (!request.result.objectStoreNames.contains(STORE)) {
+              request.result.createObjectStore(STORE);
+            }
+          };
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      async function putAsset(key, file) {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE, 'readwrite');
+          tx.objectStore(STORE).put({ blob: file, type: file.type, name: file.name }, key);
+          tx.oncomplete = () => { db.close(); resolve(); };
+          tx.onerror = () => { db.close(); reject(tx.error); };
+        });
+      }
+
+      async function getAsset(key) {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE, 'readonly');
+          const request = tx.objectStore(STORE).get(key);
+          request.onsuccess = () => { db.close(); resolve(request.result || null); };
+          request.onerror = () => { db.close(); reject(request.error); };
+        });
+      }
+
+      async function deleteAssets() {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction(STORE, 'readwrite');
+          tx.objectStore(STORE).clear();
+          tx.oncomplete = () => { db.close(); resolve(); };
+          tx.onerror = () => { db.close(); reject(tx.error); };
+        });
+      }
+
+      // Cores
+      function bindColor(inputId, cssVariable) {
+        const input = $(inputId);
+        input.addEventListener('input', () => {
+          preview.style.setProperty(cssVariable, input.value);
+        });
+      }
+
+      bindColor('bannerColor', '--banner');
+      bindColor('pinkAColor', '--pink-a');
+      bindColor('pinkBColor', '--pink-b');
+      bindColor('backgroundColor', '--profile-bg');
+
+      // Avatar
+      function showAvatar(file) {
+        if (avatarObjectUrl) URL.revokeObjectURL(avatarObjectUrl);
+        avatarObjectUrl = URL.createObjectURL(file);
+        avatarImg.src = avatarObjectUrl;
+        avatarImg.style.display = 'block';
+        avatarPlaceholder.style.display = 'none';
+      }
+
+      // Banner (aplica nos dois blocos azuis)
+      function showBanner(file) {
+        if (bannerObjectUrl) URL.revokeObjectURL(bannerObjectUrl);
+        bannerObjectUrl = URL.createObjectURL(file);
+
+        const url = `url("${bannerObjectUrl}")`;
+        blueLeft.style.backgroundImage = url;
+        blueRight.style.backgroundImage = url;
+        blueLeft.style.backgroundSize = 'cover';
+        blueRight.style.backgroundSize = 'cover';
+        blueLeft.style.backgroundPosition = 'center';
+        blueRight.style.backgroundPosition = 'center';
+      }
+
+      // Eventos de arquivo
+      $('avatarFile').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) return say('Escolha um arquivo de imagem ou GIF.');
+        showAvatar(file);
+        say('Avatar aplicado. Clique em salvar para guardar.');
+      });
+
+      $('bannerFile').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) return say('Escolha um arquivo de imagem ou GIF.');
+        showBanner(file);
+        say('Banner aplicado nos blocos azuis. Clique em salvar para guardar.');
+      });
+
+      // Salvar
+      $('savePreview').addEventListener('click', async () => {
+        try {
+          const colors = {
+            banner: $('bannerColor').value,
+            pinkA: $('pinkAColor').value,
+            pinkB: $('pinkBColor').value,
+            bg: $('backgroundColor').value
+          };
+          localStorage.setItem(COLORS_KEY, JSON.stringify(colors));
+
+          const avatarFile = $('avatarFile').files[0];
+          const bannerFile = $('bannerFile').files[0];
+
+          if (avatarFile) await putAsset('avatar', avatarFile);
+          if (bannerFile) await putAsset('banner', bannerFile);
+
+          say('Perfil salvo neste navegador!');
+        } catch (err) {
+          console.error(err);
+          say('Não coube no armazenamento. Tente imagens menores.');
+        }
+      });
+
+      // Restaurar
+      async function restore() {
+        const defaults = {
+          banner: '#4d27ff',
+          pinkA: '#ff16d9',
+          pinkB: '#ff16d9',
+          bg: '#ffffff'
+        };
+
+        try {
+          Object.assign(defaults, JSON.parse(localStorage.getItem(COLORS_KEY) || '{}'));
+        } catch (e) {}
+
+        const map = [
+          ['bannerColor', 'banner', '--banner'],
+          ['pinkAColor', 'pinkA', '--pink-a'],
+          ['pinkBColor', 'pinkB', '--pink-b'],
+          ['backgroundColor', 'bg', '--profile-bg']
+        ];
+
+        map.forEach(([id, key, cssVar]) => {
+          $(id).value = defaults[key];
+          preview.style.setProperty(cssVar, defaults[key]);
+        });
+
+        try {
+          const avatarData = await getAsset('avatar');
+          const bannerData = await getAsset('banner');
+          if (avatarData?.blob) showAvatar(avatarData.blob);
+          if (bannerData?.blob) showBanner(bannerData.blob);
+        } catch (e) {}
+      }
+
+      // Reset
+      $('resetProfile').addEventListener('click', async () => {
+        try {
+          localStorage.removeItem(COLORS_KEY);
+          await deleteAssets();
+        } catch (e) {}
+
+        $('avatarFile').value = '';
+        $('bannerFile').value = '';
+
+        avatarImg.style.display = 'none';
+        avatarPlaceholder.style.display = 'block';
+        blueLeft.style.backgroundImage = '';
+        blueRight.style.backgroundImage = '';
+
+        if (avatarObjectUrl) {
+          URL.revokeObjectURL(avatarObjectUrl);
+          avatarObjectUrl = null;
+        }
+        if (bannerObjectUrl) {
+          URL.revokeObjectURL(bannerObjectUrl);
+          bannerObjectUrl = null;
+        }
+
+        await restore();
+        say('Prévia restaurada.');
+      });
+
+      // Init
+      $('year').textContent = new Date().getFullYear();
+      restore();
+    })();
+  </script>
+</body>
+</html>
