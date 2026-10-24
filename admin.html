@@ -39,6 +39,11 @@ const { data, error } = await supabase.auth.signInWithOAuth({
   options: {
     redirectTo: 'https://7mr-sam7.github.io/admin.html'
   }
+});await supabase.auth.signInWithOAuth({
+  provider: 'discord',
+  options: {
+    redirectTo: 'https://7mr-sam7.github.io/admin.html'
+  }
 });</script></body></html>
 
 /* SPECIAL CORE — ADMIN REDESIGN */
