@@ -1,397 +1,410 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#080910"><title>Administração — Special Core</title><link rel="stylesheet" href="style.css"></head>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b12">
+  <title>Administração · Special Core</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#0b0b12;--panel:#12121c;--panel2:#171725;--line:#28283a;--text:#f3f3fc;--muted:#999ab5;--purple:#8b5cf6;--blue:#5865f2;--green:#40d6a0;--red:#ff6b81;--radius:18px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#202047 0,transparent 36%),var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min-height:100vh}
+    button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}
+    .sidebar{padding:26px 18px;border-right:1px solid var(--line);background:rgba(11,11,18,.76);display:flex;flex-direction:column;gap:28px}
+    .brand{display:flex;align-items:center;gap:12px;padding:0 8px}.brand-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--blue),var(--purple));font:700 20px "Space Grotesk";box-shadow:0 8px 30px #5865f233}.brand strong{display:block;font:700 16px "Space Grotesk";letter-spacing:.04em}.brand small{color:var(--muted);font-size:11px}
+    .nav-label{font-size:10px;letter-spacing:.16em;color:#777892;font-weight:700;padding:0 12px;margin-bottom:8px}.nav{display:grid;gap:6px}.nav button{border:1px solid transparent;background:transparent;color:var(--muted);text-align:left;padding:12px 13px;border-radius:12px;display:flex;align-items:center;gap:12px;transition:.18s}.nav button:hover{background:#ffffff08;color:var(--text)}.nav button.active{background:linear-gradient(100deg,#5865f226,#8b5cf61c);border-color:#7774f34a;color:#fff}.nav .ico{width:22px;text-align:center;font-size:17px}.side-bottom{margin-top:auto}.status{border:1px solid var(--line);background:#ffffff04;border-radius:14px;padding:14px;font-size:12px;color:var(--muted);line-height:1.6}.status b{display:block;color:var(--text);font-size:13px;margin-bottom:3px}
+    .main{min-width:0;padding:28px clamp(18px,4vw,48px) 32px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:30px}.eyebrow{color:#aaa8ff;text-transform:uppercase;letter-spacing:.15em;font-size:10px;font-weight:700}.topbar h1{font:700 clamp(25px,3vw,34px) "Space Grotesk";margin:7px 0 0;letter-spacing:-.04em}.top-actions{display:flex;gap:10px;align-items:center}.pill{border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--muted);font-size:12px;display:flex;align-items:center;gap:8px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #40d6a077}
+    .btn{border:1px solid var(--line);border-radius:11px;padding:10px 14px;background:#ffffff07;color:var(--text);font-weight:600;font-size:12px;transition:.18s}.btn:hover{transform:translateY(-1px);border-color:#7774f3}.btn.primary{border-color:transparent;background:linear-gradient(120deg,var(--blue),var(--purple));box-shadow:0 7px 20px #5865f226}.btn.danger{color:#ff9bab;border-color:#ff6b813f}.btn.small{padding:7px 10px;font-size:11px}
+    .notice{padding:14px 16px;border:1px solid #eabf5840;background:#eabf580b;border-radius:13px;color:#d9d1b3;font-size:12px;line-height:1.6;margin-bottom:22px}.notice strong{color:#ffe6a1}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:24px}.stat,.panel{border:1px solid var(--line);background:linear-gradient(145deg,#171725f5,#11111bf5);border-radius:var(--radius);box-shadow:0 14px 45px #00000012}.stat{padding:19px}.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.stat-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#8b5cf61b;color:#b8a0ff;font-size:17px}.stat strong{display:block;font:700 29px "Space Grotesk";margin:14px 0 4px}.stat small{font-size:11px;color:var(--muted)}
+    .panel{padding:22px;margin-bottom:18px}.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:18px}.panel h2{font:600 17px "Space Grotesk";margin:0 0 5px}.sub{font-size:12px;color:var(--muted);margin:0;line-height:1.6}.section{display:none;animation:appear .22s ease}.section.active{display:block}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+    .form-grid{display:grid;grid-template-columns:1.4fr 1fr auto;gap:10px;align-items:end}.field label{display:block;font-size:11px;color:var(--muted);margin:0 0 7px}.field input,.field select{width:100%;min-width:0;border:1px solid var(--line);background:#0b0b13;border-radius:11px;padding:12px;color:var(--text);outline:none}.field input:focus,.field select:focus{border-color:#8b5cf6;box-shadow:0 0 0 3px #8b5cf61b}.field input::placeholder{color:#64657e}
+    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:470px}th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#7f809c;font-weight:700;padding:12px;border-bottom:1px solid var(--line)}td{padding:13px 12px;border-bottom:1px solid #28283a8c;font-size:12px;color:#dedeee}tr:last-child td{border-bottom:0}.muted{color:var(--muted)}.tag{display:inline-flex;border:1px solid #40d6a033;background:#40d6a00d;color:#8ceac9;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:700}.empty{text-align:center;padding:30px;color:var(--muted);font-size:12px}.row-actions{display:flex;gap:6px}
+    .login-card{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}.login-card .big-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#5865f222;color:#aab0ff;font-size:24px;margin-bottom:15px}.login-status{font-size:12px;color:var(--muted);margin-top:10px}.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.tool{padding:16px;border:1px solid var(--line);border-radius:14px;background:#ffffff03}.tool h3{font-size:13px;margin:0 0 6px}.tool p{font-size:11px;color:var(--muted);line-height:1.6;margin:0 0 13px}.toast{position:fixed;right:22px;bottom:22px;max-width:min(400px,calc(100% - 44px));background:#1b1b2a;border:1px solid #44445d;border-radius:12px;padding:13px 16px;box-shadow:0 12px 40px #0008;font-size:12px;z-index:10;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateY(0)}footer{text-align:center;color:#666781;font-size:10px;padding:20px 0}
+    @media(max-width:900px){.app{grid-template-columns:78px minmax(0,1fr)}.sidebar{padding:22px 10px}.brand{justify-content:center;padding:0}.brand-text,.nav-label,.nav button .nav-text,.status{display:none}.nav button{justify-content:center;padding:13px 5px}.nav .ico{font-size:19px}.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.main{padding:24px 20px}}
+    @media(max-width:620px){.app{display:block}.sidebar{position:sticky;top:0;z-index:5;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;gap:12px}.brand{flex:0 0 auto}.brand-mark{width:36px;height:36px}.nav-wrap{min-width:0;flex:1}.nav-label{display:none}.nav{display:flex;gap:4px;overflow:auto}.nav button{flex:0 0 auto;padding:9px 10px}.nav button .nav-text{display:none}.side-bottom{display:none}.main{padding:23px 14px}.topbar{align-items:flex-start}.top-actions .pill{display:none}.stats{grid-template-columns:1fr;gap:9px}.stat{padding:15px}.stat strong{font-size:25px;margin:9px 0 2px}.panel{padding:17px}.form-grid{grid-template-columns:1fr}.form-grid .btn{width:100%}.login-card{grid-template-columns:1fr}.tools-grid{grid-template-columns:1fr}.panel-head{flex-direction:column}.topbar h1{font-size:25px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
 <body>
-<header class="site-header"><nav class="nav container"><a class="brand" href="index.html"><span class="brand-mark">SC</span><span>Special Core<small>PAINEL ADMINISTRATIVO</small></span></a><div class="nav-links"><a href="index.html">Início</a><a href="perfil.html">Perfil</a><a href="premium.html">Premium</a><a class="active" href="admin.html">Admin</a></div></nav></header>
-<main class="container"><section class="page-hero"><span class="eyebrow">Área restrita · Interface de demonstração</span><h1>Controle central da <span class="gradient">Special Core.</span></h1><p class="lead">Gerencie registros de Premium e monte permissões por Gmail. Esta versão é somente a interface local; ainda não autentica contas Google nem aplica alterações ao bot.</p></section>
-<div class="admin-warning"><strong>Segurança:</strong> como o site está no GitHub Pages, os dados e permissões abaixo ficam apenas neste navegador e podem ser alterados por quem tiver acesso a ele. Não use esta demonstração para confiar acesso real. Para produção, conecte Google Sign-In e uma API/backend que valide permissões no servidor. Seu Gmail principal configurado na interface: <strong>gx009er@gmail.com</strong>.</div>
-<div class="admin-layout"><aside class="panel admin-side"><a href="#resumo">▦ Resumo</a><a href="#premium-admin">✦ Gerenciar Premium</a><a href="#permissoes">♙ Permissões</a><a href="#registros">≡ Registros locais</a></aside>
-<div class="panel admin-main"><section id="resumo"><h2>Visão geral</h2><p class="muted">Os números abaixo refletem somente registros salvos neste navegador.</p><div class="stat-grid"><div class="panel stat"><strong id="totalPremium">0</strong><span>Registros VIP ativos</span></div><div class="panel stat"><strong id="totalStaff">0</strong><span>Gmails autorizados</span></div><div class="panel stat"><strong>LOCAL</strong><span>Modo de armazenamento</span></div></div></section>
-<section id="premium-admin" class="mt-20"><h2>Gerenciar Premium</h2><p class="muted">Registre uma ativação ou remoção manual. Isso não altera o banco do Sharkot.</p><form id="premiumForm" class="form-grid"><div class="field"><label for="vipEmail">Gmail da pessoa</label><input id="vipEmail" type="email" required placeholder="pessoa@gmail.com"></div><div class="field"><label for="vipStatus">Ação</label><select id="vipStatus"><option value="active">Conceder Premium</option><option value="inactive">Remover Premium</option></select></div><div class="field"><label for="vipDuration">Duração / observação</label><input id="vipDuration" placeholder="Ex.: 30 dias, compra verificada"></div><div class="field"><label for="vipDiscord">Discord / ID (opcional)</label><input id="vipDiscord" placeholder="Usuário ou ID do Discord"></div><div class="field full"><label for="vipNotes">Notas administrativas</label><textarea id="vipNotes" rows="2" placeholder="Anotação interna para você..."></textarea></div><div class="field full"><button class="btn" type="submit">Salvar registro local</button></div></form></section>
-<section id="permissoes" class="mt-20"><h2>Permissões por Gmail</h2><p class="muted">Marque exatamente o que a pessoa poderá fazer na versão real do painel.</p><form id="staffForm"><div class="form-grid"><div class="field"><label for="staffEmail">Gmail autorizado</label><input id="staffEmail" type="email" required placeholder="colaborador@gmail.com"></div><div class="field"><label for="staffRole">Modelo rápido</label><select id="staffRole"><option value="custom">Personalizado</option><option value="view">Somente visualizar</option><option value="premium">Gerenciar Premium</option><option value="full">Acesso total</option></select></div></div>
-<div class="permission-grid">
-<label class="permission"><input type="checkbox" name="perm" value="view_dashboard"><span><strong>Visualizar painel</strong><br><span class="muted">Ver páginas e resumo administrativo.</span></span></label>
-<label class="permission"><input type="checkbox" name="perm" value="view_users"><span><strong>Visualizar usuários</strong><br><span class="muted">Consultar registros e informações permitidas.</span></span></label>
-<label class="permission"><input type="checkbox" name="perm" value="grant_premium"><span><strong>Conceder Premium</strong><br><span class="muted">Registrar ativação de VIP.</span></span></label>
-<label class="permission"><input type="checkbox" name="perm" value="remove_premium"><span><strong>Remover Premium</strong><br><span class="muted">Registrar remoção de VIP.</span></span></label>
-<label class="permission"><input type="checkbox" name="perm" value="manage_staff"><span><strong>Gerenciar equipe</strong><br><span class="muted">Criar e alterar permissões de outros colaboradores.</span></span></label>
-<label class="permission"><input type="checkbox" name="perm" value="edit_site"><span><strong>Editar configurações do site</strong><br><span class="muted">Alterar configurações autorizadas.</span></span></label>
-<label class="permission"><input type="checkbox" name="perm" value="full_access"><span><strong>Acesso total</strong><br><span class="muted">Permissão ampla; conceda somente a pessoas confiáveis.</span></span></label>
-</div><div class="admin-actions"><button class="btn" type="submit">Salvar permissões localmente</button><button class="btn secondary" type="button" id="clearPerms">Limpar seleção</button></div></form></section>
-<section id="registros" class="mt-20"><h2>Registros locais</h2><div class="admin-actions"><button class="btn secondary small" id="exportData" type="button">Exportar JSON</button><button class="btn secondary small" id="clearData" type="button">Apagar todos os registros locais</button></div><div id="records" class="local-list"><p class="muted">Nenhum registro local por enquanto.</p></div></section>
-</div></div></main>
-<footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">Special Core™ · Sharkot</div><div>Feito por <strong>7mr.sam7</strong>. Todos os direitos reservados. © <span id="year"></span></div></div><div><a href="https://discord.com/terms" target="_blank" rel="noopener">Termos do Discord</a> · <a href="index.html">Início</a> · <a href="premium.html">Premium</a></div></div></footer><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="app">
+  <aside class="sidebar">
+    <a class="brand" href="index.html" aria-label="Special Core início">
+      <span class="brand-mark">SC</span><span class="brand-text"><strong>SPECIAL CORE</strong><small>PAINEL ADMINISTRATIVO</small></span>
+    </a>
+    <div class="nav-wrap">
+      <div class="nav-label">PAINEL</div>
+      <nav class="nav" aria-label="Navegação administrativa">
+        <button class="active" data-section="overview"><span class="ico">⌂</span><span class="nav-text">Visão geral</span></button>
+        <button data-section="premium"><span class="ico">✦</span><span class="nav-text">Premium / VIP</span></button>
+        <button data-section="staff"><span class="ico">♙</span><span class="nav-text">Equipe</span></button>
+        <button data-section="account"><span class="ico">◎</span><span class="nav-text">Conta e acesso</span></button>
+        <button data-section="tools"><span class="ico">⚙</span><span class="nav-text">Ferramentas</span></button>
+      </nav>
+    </div>
+    <div class="side-bottom"><div class="status"><b>Modo de demonstração</b>Os dados deste painel ficam salvos neste navegador. Ainda não são sincronizados com outros dispositivos.</div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow">SPECIAL CORE / ADMIN</div><h1 id="pageTitle">Visão geral</h1></div>
+      <div class="top-actions"><span class="pill"><span class="dot"></span> Interface ativa</span><a class="btn" href="index.html">↗ Ver site</a></div>
+    </header>
+
+    <div class="notice"><strong>Importante:</strong> esta versão mantém o gerenciamento local. O login Discord abaixo autentica uma conta, mas não concede nem bloqueia privilégios administrativos no servidor. Para um painel seguro, a autorização precisa ser verificada no backend.</div>
+
+    <section class="section active" id="section-overview">
+      <div class="stats">
+        <article class="stat"><div class="stat-top"><span>Usuários Premium</span><span class="stat-icon">✦</span></div><strong id="premiumCount">0</strong><small>Registros neste navegador</small></article>
+        <article class="stat"><div class="stat-top"><span>Membros da equipe</span><span class="stat-icon">♙</span></div><strong id="staffCount">0</strong><small>Registros neste navegador</small></article>
+        <article class="stat"><div class="stat-top"><span>Última atualização</span><span class="stat-icon">◷</span></div><strong style="font-size:20px" id="lastUpdated">—</strong><small>Horário local deste navegador</small></article>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h2>Acesso administrativo</h2><p class="sub">Conecte sua conta Discord usando o Supabase Auth.</p></div><span class="tag">OAUTH</span></div>
+        <div class="login-card"><div><div class="big-icon">◎</div><h2>Conectar com Discord</h2><p class="sub">A autenticação abre o fluxo oficial do Discord. Configure as chaves públicas abaixo no código antes de usar.</p><div class="login-status" id="loginStatus">Status: não conectado nesta página.</div></div><button class="btn primary" id="discordLogin">Entrar com Discord ↗</button></div>
+      </div>
+      <div class="panel"><div class="panel-head"><div><h2>Ações rápidas</h2><p class="sub">Atalhos para as tarefas mais usadas.</p></div></div><div class="tools-grid">
+        <div class="tool"><h3>Adicionar usuário Premium</h3><p>Cadastre um usuário com nome e identificador.</p><button class="btn small" data-go="premium">Abrir Premium →</button></div>
+        <div class="tool"><h3>Gerenciar equipe</h3><p>Organize os nomes e as funções da equipe.</p><button class="btn small" data-go="staff">Abrir equipe →</button></div>
+      </div></div>
+    </section>
+
+    <section class="section" id="section-premium">
+      <div class="panel">
+        <div class="panel-head"><div><h2>Gerenciar Premium / VIP</h2><p class="sub">Adicione e remova registros locais de usuários Premium.</p></div><span class="tag" id="premiumBadge">0 REGISTROS</span></div>
+        <form class="form-grid" id="premiumForm">
+          <div class="field"><label for="premiumName">Nome do usuário</label><input id="premiumName" maxlength="80" placeholder="Ex.: Samuel" required></div>
+          <div class="field"><label for="premiumId">ID ou identificador</label><input id="premiumId" maxlength="100" placeholder="ID do Discord ou @usuário" required></div>
+          <button class="btn primary" type="submit">＋ Adicionar</button>
+        </form>
+      </div>
+      <div class="panel"><div class="panel-head"><div><h2>Lista Premium</h2><p class="sub">A lista abaixo é salva somente neste navegador.</p></div><input id="premiumSearch" aria-label="Buscar Premium" placeholder="Buscar usuário…" style="max-width:220px;width:100%;border:1px solid var(--line);background:#0b0b13;border-radius:10px;padding:10px;color:var(--text)"></div>
+        <div class="table-wrap"><table><thead><tr><th>Usuário</th><th>Identificador</th><th>Adicionado em</th><th>Ações</th></tr></thead><tbody id="premiumRows"></tbody></table><div class="empty" id="premiumEmpty">Nenhum usuário Premium cadastrado.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="section-staff">
+      <div class="panel"><div class="panel-head"><div><h2>Gerenciar equipe</h2><p class="sub">Cadastre nomes e funções para organização interna.</p></div><span class="tag" id="staffBadge">0 MEMBROS</span></div>
+        <form class="form-grid" id="staffForm">
+          <div class="field"><label for="staffName">Nome do membro</label><input id="staffName" maxlength="80" placeholder="Nome ou apelido" required></div>
+          <div class="field"><label for="staffRole">Função</label><select id="staffRole"><option>Administrador</option><option>Moderador</option><option>Suporte</option><option>Desenvolvedor</option><option>Outro</option></select></div>
+          <button class="btn primary" type="submit">＋ Adicionar</button>
+        </form>
+      </div>
+      <div class="panel"><div class="panel-head"><div><h2>Equipe cadastrada</h2><p class="sub">Esses registros não criam cargos nem permissões no Discord.</p></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Membro</th><th>Função</th><th>Adicionado em</th><th>Ações</th></tr></thead><tbody id="staffRows"></tbody></table><div class="empty" id="staffEmpty">Nenhum membro cadastrado.</div></div>
+      </div>
+    </section>
+
+    <section class="section" id="section-account">
+      <div class="panel"><div class="panel-head"><div><h2>Conta e autenticação</h2><p class="sub">Status da sessão Supabase nesta página.</p></div></div>
+        <div class="login-card"><div><h2 id="accountName">Nenhuma conta conectada</h2><p class="sub" id="accountDetails">Use “Entrar com Discord” para iniciar a autenticação.</p><div class="login-status" id="accountStatus">Sessão não verificada.</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="refreshSession">Verificar sessão</button><button class="btn danger" id="logoutButton">Sair</button></div></div>
+      </div>
+      <div class="panel"><h2>Configuração do Supabase</h2><p class="sub" style="margin:8px 0 16px">No código, preencha apenas a URL do projeto e a chave pública (publishable/anon). Nunca coloque a chave secreta ou o token administrativo aqui.</p><p class="sub">Após configurar, confirme no Supabase Authentication → URL Configuration se a URL de redirecionamento do site está permitida e se o provedor Discord está ativo.</p></div>
+    </section>
+
+    <section class="section" id="section-tools">
+      <div class="panel"><div class="panel-head"><div><h2>Ferramentas de dados</h2><p class="sub">Exporte uma cópia ou apague os registros locais deste painel.</p></div></div>
+        <div class="tools-grid">
+          <div class="tool"><h3>Exportar dados</h3><p>Baixe os registros Premium e da equipe em um arquivo JSON.</p><button class="btn primary" id="exportButton">↓ Exportar JSON</button></div>
+          <div class="tool"><h3>Importar dados</h3><p>Restaure um arquivo JSON exportado anteriormente.</p><input id="importFile" type="file" accept="application/json,.json" style="width:100%;font-size:11px;color:var(--muted);margin-bottom:12px"><button class="btn" id="importButton">↑ Importar JSON</button></div>
+          <div class="tool"><h3>Limpar registros locais</h3><p>Apague as listas Premium e equipe deste navegador. Esta ação não pode ser desfeita.</p><button class="btn danger" id="clearButton">Apagar registros</button></div>
+          <div class="tool"><h3>Armazenamento</h3><p>Os registros atuais ficam no localStorage e não são compartilhados com outros usuários ou dispositivos.</p><span class="tag">LOCAL</span></div>
+        </div>
+      </div>
+    </section>
+    <footer>© <span id="year"></span> Special Core · Painel administrativo</footer>
+  </main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-const OWNER='gx009er@gmail.com',KEY='sc-admin-demo-v1',$=id=>document.getElementById(id);$('year').textContent=new Date().getFullYear();
-let data={premium:[],staff:[]};try{data=Object.assign(data,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
-function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
-function render(){$('totalPremium').textContent=data.premium.filter(x=>x.status==='active').length;$('totalStaff').textContent=data.staff.length;const box=$('records');box.innerHTML='';const all=[...data.premium.map(x=>({...x,type:'Premium'})),...data.staff.map(x=>({...x,type:'Permissões'}))];if(!all.length){box.innerHTML='<p class="muted">Nenhum registro local por enquanto.</p>';return}all.forEach((r,i)=>{const item=document.createElement('div');item.className='local-item';const info=document.createElement('div');const title=document.createElement('strong');title.textContent=r.email+' · '+r.type;const sub=document.createElement('small');sub.textContent=r.type==='Premium'?((r.status==='active'?'VIP ativo':'VIP removido')+' · '+(r.duration||'sem observação')):('Permissões: '+(r.permissions||[]).join(', '));info.append(title,sub);const del=document.createElement('button');del.className='btn secondary small';del.textContent='Excluir';del.type='button';del.addEventListener('click',()=>{if(r.type==='Premium')data.premium.splice(data.premium.findIndex(x=>x.id===r.id),1);else data.staff.splice(data.staff.findIndex(x=>x.id===r.id),1);save();toast('Registro local excluído.')});item.append(info,del);box.append(item)})}
-$('premiumForm').addEventListener('submit',e=>{e.preventDefault();const email=$('vipEmail').value.trim().toLowerCase();if(!email)return;data.premium.unshift({id:Date.now(),email,status:$('vipStatus').value,duration:$('vipDuration').value.trim(),discord:$('vipDiscord').value.trim(),notes:$('vipNotes').value.trim(),by:OWNER,created:new Date().toISOString()});save();e.target.reset();toast('Registro salvo apenas neste navegador.')});
-const perms=[...document.querySelectorAll('input[name="perm"]')];
-$('staffRole').addEventListener('change',()=>{const role=$('staffRole').value;const map={view:['view_dashboard','view_users'],premium:['view_dashboard','view_users','grant_premium','remove_premium'],full:perms.map(p=>p.value),custom:[]};perms.forEach(p=>p.checked=map[role].includes(p.value))});
-$('staffForm').addEventListener('submit',e=>{e.preventDefault();const email=$('staffEmail').value.trim().toLowerCase();const selected=perms.filter(p=>p.checked).map(p=>p.value);if(!selected.length){toast('Marque pelo menos uma permissão.');return}if(email===OWNER){toast('Esse é o Gmail principal do proprietário.');return}const existing=data.staff.findIndex(x=>x.email===email);const item={id:Date.now(),email,permissions:selected,by:OWNER,created:new Date().toISOString()};if(existing>=0)data.staff[existing]=item;else data.staff.unshift(item);save();toast('Permissões salvas localmente.');});
-$('clearPerms').addEventListener('click',()=>perms.forEach(p=>p.checked=false));
-$('clearData').addEventListener('click',()=>{if(confirm('Apagar todos os registros guardados neste navegador?')){data={premium:[],staff:[]};save();toast('Registros locais apagados.')}});
-$('exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='special-core-admin-local.json';a.click();URL.revokeObjectURL(url)});
-render();
-const { data, error } = await supabase.auth.signInWithOAuth({
-  provider: 'discord',
-  options: {
-    redirectTo: 'https://7mr-sam7.github.io/admin.html'
-  }
-});await supabase.auth.signInWithOAuth({
-  provider: 'discord',
-  options: {
-    redirectTo: 'https://7mr-sam7.github.io/admin.html'
-  }
-});</script></body></html>
+(() => {
+  'use strict';
 
-/* SPECIAL CORE — ADMIN REDESIGN */
-:root {
-  --admin-bg: #080910;
-  --admin-panel: #10121d;
-  --admin-panel-2: #151827;
-  --admin-border: rgba(160, 165, 210, .13);
-  --admin-text: #f4f5ff;
-  --admin-muted: #969bb5;
-  --admin-blue: #6478ff;
-  --admin-purple: #a66bff;
-}
+  // CONFIGURAÇÃO: use somente valores públicos do Supabase no frontend.
+  // Não cole SUPABASE_SECRET_KEY, Discord Client Secret ou ADMIN_TOKEN aqui.
+  const SUPABASE_URL = 'COLE_AQUI_A_URL_DO_PROJETO_SUPABASE';
+  const SUPABASE_PUBLIC_KEY = 'COLE_AQUI_A_CHAVE_PUBLICA_DO_SUPABASE';
+  const REDIRECT_URL = 'https://7mr-sam7.github.io/admin.html';
 
-body:has(.admin-layout) {
-  background:
-    radial-gradient(ellipse at 80% 0%, #25204a55, transparent 42%),
-    radial-gradient(ellipse at 0% 45%, #182b5540, transparent 35%),
-    var(--admin-bg);
-  color: var(--admin-text);
-}
+  const STORAGE_KEY = 'special-core-admin-v2';
+  const $ = (id) => document.getElementById(id);
+  const state = { premium: [], staff: [], updatedAt: null };
+  let supabaseClient = null;
+  let toastTimer = null;
 
-.admin-layout {
-  display: grid;
-  grid-template-columns: 235px minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-  margin: 32px 0 64px;
-}
-
-.admin-layout .panel {
-  background: linear-gradient(145deg, #141725, #0e1019);
-  border: 1px solid var(--admin-border);
-  border-radius: 18px;
-  box-shadow: 0 18px 55px #00000020;
-}
-
-.admin-side {
-  position: sticky;
-  top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 14px;
-}
-
-.admin-side a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 13px 14px;
-  border-radius: 11px;
-  color: var(--admin-muted);
-  text-decoration: none;
-  transition: .2s ease;
-}
-
-.admin-side a:hover,
-.admin-side a:focus-visible {
-  color: white;
-  background: #6678ff18;
-  outline: none;
-}
-
-.admin-main {
-  min-width: 0;
-  padding: clamp(18px, 3vw, 32px);
-}
-
-.admin-main section {
-  scroll-margin-top: 24px;
-}
-
-.admin-main h2 {
-  color: var(--admin-text);
-  font-size: clamp(19px, 2vw, 24px);
-  letter-spacing: -.5px;
-  margin: 0 0 10px;
-}
-
-.admin-main .muted {
-  color: var(--admin-muted);
-  line-height: 1.65;
-}
-
-.admin-main .stat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 22px;
-}
-
-.admin-main .stat {
-  padding: 22px 18px;
-  border-radius: 15px;
-  background: linear-gradient(145deg, #191d31, #11131f);
-  border: 1px solid var(--admin-border);
-}
-
-.admin-main .stat strong {
-  display: block;
-  font-size: clamp(23px, 3vw, 32px);
-  letter-spacing: -1px;
-  margin-bottom: 9px;
-  background: linear-gradient(100deg, #8ba0ff, #c39aff);
-  color: #b3a5ff;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.admin-main .stat span {
-  font-size: 12px;
-  color: var(--admin-muted);
-}
-
-.admin-main .mt-20 {
-  margin-top: 36px;
-  padding-top: 30px;
-  border-top: 1px solid var(--admin-border);
-}
-
-.admin-main .form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 22px;
-}
-
-.admin-main .field {
-  min-width: 0;
-}
-
-.admin-main .field.full {
-  grid-column: 1 / -1;
-}
-
-.admin-main .field label {
-  display: block;
-  margin-bottom: 9px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #d9dcf1;
-}
-
-.admin-main input:not([type="checkbox"]),
-.admin-main select,
-.admin-main textarea {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 0;
-  padding: 13px 14px;
-  color: var(--admin-text);
-  background: #090b13;
-  border: 1px solid #292d43;
-  border-radius: 11px;
-  font: inherit;
-  font-size: 14px;
-  transition: border-color .2s, box-shadow .2s;
-}
-
-.admin-main input::placeholder,
-.admin-main textarea::placeholder {
-  color: #676d87;
-}
-
-.admin-main input:focus,
-.admin-main select:focus,
-.admin-main textarea:focus {
-  outline: none;
-  border-color: var(--admin-blue);
-  box-shadow: 0 0 0 3px #6478ff20;
-}
-
-.admin-main select option {
-  background: #10121d;
-  color: white;
-}
-
-.admin-main .btn {
-  border: 1px solid transparent;
-  border-radius: 11px;
-  padding: 12px 18px;
-  background: linear-gradient(110deg, #5865f2, #8559ed);
-  color: white;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .2s, filter .2s, border-color .2s;
-}
-
-.admin-main .btn:hover {
-  transform: translateY(-2px);
-  filter: brightness(1.12);
-}
-
-.admin-main .btn.secondary {
-  background: #191c2b;
-  border-color: var(--admin-border);
-  color: #dfe2fa;
-}
-
-.admin-main .btn.small {
-  padding: 8px 12px;
-  font-size: 12px;
-}
-
-.permission-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin: 22px 0;
-}
-
-.permission {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 16px;
-  border-radius: 13px;
-  background: #0c0f19;
-  border: 1px solid var(--admin-border);
-  cursor: pointer;
-  transition: border-color .2s, background .2s;
-}
-
-.permission:hover {
-  border-color: #6478ff80;
-  background: #15182a;
-}
-
-.permission input[type="checkbox"] {
-  width: 17px;
-  height: 17px;
-  margin-top: 3px;
-  accent-color: var(--admin-blue);
-  flex-shrink: 0;
-}
-
-.permission strong {
-  display: inline-block;
-  margin-bottom: 5px;
-  font-size: 13px;
-}
-
-.permission .muted {
-  font-size: 12px;
-}
-
-.admin-actions {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 18px 0;
-}
-
-.local-list {
-  display: grid;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.local-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: #0b0d16;
-  border: 1px solid var(--admin-border);
-  border-radius: 13px;
-}
-
-.local-item strong {
-  display: block;
-  overflow-wrap: anywhere;
-  margin-bottom: 6px;
-}
-
-.local-item small {
-  display: block;
-  color: var(--admin-muted);
-  line-height: 1.6;
-  overflow-wrap: anywhere;
-}
-
-.admin-warning {
-  margin-top: 24px;
-  padding: 18px 20px;
-  background: #eab3080b;
-  border: 1px solid #eab30835;
-  border-radius: 14px;
-  color: #d9d5c7;
-  line-height: 1.7;
-  font-size: 13px;
-}
-
-.admin-warning strong {
-  color: #f5d477;
-}
-
-body:has(.admin-layout) .page-hero {
-  padding-top: 38px;
-  padding-bottom: 12px;
-}
-
-body:has(.admin-layout) .page-hero h1 {
-  letter-spacing: -1.5px;
-}
-
-@media (max-width: 800px) {
-  .admin-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  function showToast(message) {
+    const toast = $('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
   }
 
-  .admin-side {
-    position: static;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  function safeText(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[char]);
   }
 
-  .admin-side a {
-    padding: 11px;
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 520px) {
-  .admin-main .stat-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-main .form-grid,
-  .permission-grid {
-    grid-template-columns: 1fr;
+  function readStorage() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      state.premium = Array.isArray(saved.premium) ? saved.premium : [];
+      state.staff = Array.isArray(saved.staff) ? saved.staff : [];
+      state.updatedAt = saved.updatedAt || null;
+    } catch (error) {
+      state.premium = [];
+      state.staff = [];
+      state.updatedAt = null;
+      showToast('Não foi possível ler os dados locais. O painel iniciou vazio.');
+    }
   }
 
-  .admin-main .field.full {
-    grid-column: auto;
+  function saveStorage() {
+    state.updatedAt = new Date().toISOString();
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      render();
+    } catch (error) {
+      showToast('Erro ao salvar. Verifique o espaço disponível no navegador.');
+    }
   }
 
-  .local-item {
-    align-items: flex-start;
-    flex-direction: column;
+  function formatDate(value) {
+    if (!value) return '—';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? '—' : date.toLocaleDateString('pt-BR');
   }
 
-  .admin-main {
-    padding: 17px;
+  function renderPremium(query = '') {
+    const normalized = query.trim().toLocaleLowerCase('pt-BR');
+    const items = state.premium.filter((item) =>
+      `${item.name} ${item.identifier}`.toLocaleLowerCase('pt-BR').includes(normalized)
+    );
+    $('premiumRows').innerHTML = items.map((item) => `
+      <tr>
+        <td><strong>${safeText(item.name)}</strong></td>
+        <td class="muted">${safeText(item.identifier)}</td>
+        <td class="muted">${formatDate(item.createdAt)}</td>
+        <td><button class="btn danger small" data-remove-premium="${safeText(item.id)}">Remover</button></td>
+      </tr>`).join('');
+    $('premiumEmpty').style.display = items.length ? 'none' : 'block';
+    $('premiumEmpty').textContent = normalized ? 'Nenhum resultado encontrado.' : 'Nenhum usuário Premium cadastrado.';
+    $('premiumBadge').textContent = `${state.premium.length} REGISTROS`;
   }
-}
+
+  function renderStaff() {
+    $('staffRows').innerHTML = state.staff.map((item) => `
+      <tr>
+        <td><strong>${safeText(item.name)}</strong></td>
+        <td><span class="tag">${safeText(item.role)}</span></td>
+        <td class="muted">${formatDate(item.createdAt)}</td>
+        <td><button class="btn danger small" data-remove-staff="${safeText(item.id)}">Remover</button></td>
+      </tr>`).join('');
+    $('staffEmpty').style.display = state.staff.length ? 'none' : 'block';
+    $('staffBadge').textContent = `${state.staff.length} MEMBROS`;
+  }
+
+  function render() {
+    $('premiumCount').textContent = state.premium.length;
+    $('staffCount').textContent = state.staff.length;
+    $('lastUpdated').textContent = state.updatedAt
+      ? new Date(state.updatedAt).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})
+      : '—';
+    renderPremium($('premiumSearch').value);
+    renderStaff();
+  }
+
+  function navigate(sectionName) {
+    const known = ['overview', 'premium', 'staff', 'account', 'tools'];
+    const section = known.includes(sectionName) ? sectionName : 'overview';
+    document.querySelectorAll('.section').forEach((node) => node.classList.toggle('active', node.id === `section-${section}`));
+    document.querySelectorAll('[data-section]').forEach((node) => node.classList.toggle('active', node.dataset.section === section));
+    const titles = {overview:'Visão geral', premium:'Premium / VIP', staff:'Equipe', account:'Conta e acesso', tools:'Ferramentas'};
+    $('pageTitle').textContent = titles[section];
+  }
+
+  function makeId() {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
+  }
+
+  $('premiumForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = $('premiumName').value.trim();
+    const identifier = $('premiumId').value.trim();
+    if (!name || !identifier) return showToast('Preencha nome e identificador.');
+    state.premium.unshift({id:makeId(), name, identifier, createdAt:new Date().toISOString()});
+    saveStorage();
+    event.target.reset();
+    showToast('Usuário adicionado à lista local.');
+  });
+
+  $('staffForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const name = $('staffName').value.trim();
+    const role = $('staffRole').value;
+    if (!name) return showToast('Informe o nome do membro.');
+    state.staff.unshift({id:makeId(), name, role, createdAt:new Date().toISOString()});
+    saveStorage();
+    event.target.reset();
+    showToast('Membro adicionado à lista local.');
+  });
+
+  document.addEventListener('click', (event) => {
+    const sectionButton = event.target.closest('[data-section]');
+    const quickButton = event.target.closest('[data-go]');
+    const removePremium = event.target.closest('[data-remove-premium]');
+    const removeStaff = event.target.closest('[data-remove-staff]');
+    if (sectionButton) navigate(sectionButton.dataset.section);
+    if (quickButton) navigate(quickButton.dataset.go);
+    if (removePremium) {
+      const item = state.premium.find((entry) => entry.id === removePremium.dataset.removePremium);
+      if (item && confirm(`Remover ${item.name} da lista local?`)) {
+        state.premium = state.premium.filter((entry) => entry.id !== item.id);
+        saveStorage();
+        showToast('Registro removido.');
+      }
+    }
+    if (removeStaff) {
+      const item = state.staff.find((entry) => entry.id === removeStaff.dataset.removeStaff);
+      if (item && confirm(`Remover ${item.name} da equipe local?`)) {
+        state.staff = state.staff.filter((entry) => entry.id !== item.id);
+        saveStorage();
+        showToast('Registro removido.');
+      }
+    }
+  });
+
+  $('premiumSearch').addEventListener('input', (event) => renderPremium(event.target.value));
+
+  $('exportButton').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({...state, exportedAt:new Date().toISOString()}, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `special-core-admin-${new Date().toISOString().slice(0,10)}.json`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    showToast('Exportação iniciada.');
+  });
+
+  $('importButton').addEventListener('click', async () => {
+    const file = $('importFile').files[0];
+    if (!file) return showToast('Selecione um arquivo JSON primeiro.');
+    try {
+      const imported = JSON.parse(await file.text());
+      if (!Array.isArray(imported.premium) || !Array.isArray(imported.staff)) {
+        throw new Error('O arquivo não contém as listas esperadas.');
+      }
+      if (!confirm('Importar vai substituir as listas locais atuais. Continuar?')) return;
+      state.premium = imported.premium.map((item) => ({
+        id:String(item.id || makeId()), name:String(item.name || '').slice(0,80),
+        identifier:String(item.identifier || item.idDiscord || '').slice(0,100),
+        createdAt:item.createdAt || new Date().toISOString()
+      })).filter((item) => item.name && item.identifier);
+      state.staff = imported.staff.map((item) => ({
+        id:String(item.id || makeId()), name:String(item.name || '').slice(0,80),
+        role:String(item.role || 'Outro').slice(0,60), createdAt:item.createdAt || new Date().toISOString()
+      })).filter((item) => item.name);
+      saveStorage();
+      $('importFile').value = '';
+      showToast('Dados importados para este navegador.');
+    } catch (error) {
+      showToast(`Falha ao importar: ${error.message}`);
+    }
+  });
+
+  $('clearButton').addEventListener('click', () => {
+    if (!confirm('Tem certeza? Isso apagará as listas Premium e equipe salvas neste navegador.')) return;
+    state.premium = [];
+    state.staff = [];
+    saveStorage();
+    showToast('Registros locais apagados.');
+  });
+
+  function configureSupabase() {
+    const configured = SUPABASE_URL.startsWith('https://')
+      && !SUPABASE_URL.includes('COLE_AQUI')
+      && SUPABASE_PUBLIC_KEY
+      && !SUPABASE_PUBLIC_KEY.includes('COLE_AQUI');
+
+    if (!configured) {
+      $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
+      $('accountStatus').textContent = 'Supabase ainda não configurado.';
+      $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
+      $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
+      $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
+      return;
+    }
+
+    if (!window.supabase?.createClient) {
+      $('loginStatus').textContent = 'Não foi possível carregar a biblioteca Supabase.';
+      return;
+    }
+
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+
+    async function updateSessionStatus() {
+      const {data, error} = await supabaseClient.auth.getSession();
+      if (error) {
+        $('loginStatus').textContent = 'Erro ao consultar a sessão.';
+        $('accountStatus').textContent = error.message;
+        return;
+      }
+      const user = data.session?.user;
+      if (user) {
+        const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Conta Discord';
+        $('loginStatus').textContent = `Conectado: ${displayName}`;
+        $('accountName').textContent = displayName;
+        $('accountDetails').textContent = `E-mail: ${user.email || 'não fornecido'} · ID da conta Supabase: ${user.id}`;
+        $('accountStatus').textContent = 'Sessão Supabase ativa. Isso ainda não confirma permissão de administrador.';
+      } else {
+        $('loginStatus').textContent = 'Status: não conectado nesta página.';
+        $('accountName').textContent = 'Nenhuma conta conectada';
+        $('accountDetails').textContent = 'Use “Entrar com Discord” para iniciar a autenticação.';
+        $('accountStatus').textContent = 'Nenhuma sessão ativa.';
+      }
+    }
+
+    $('discordLogin').addEventListener('click', async () => {
+      $('discordLogin').disabled = true;
+      $('discordLogin').textContent = 'Abrindo Discord…';
+      try {
+        const {error} = await supabaseClient.auth.signInWithOAuth({
+          provider:'discord',
+          options:{redirectTo:REDIRECT_URL}
+        });
+        if (error) showToast(`Erro no login: ${error.message}`);
+      } catch (error) {
+        showToast(`Erro no login: ${error.message}`);
+      } finally {
+        $('discordLogin').disabled = false;
+        $('discordLogin').textContent = 'Entrar com Discord ↗';
+      }
+    });
+
+    $('refreshSession').addEventListener('click', updateSessionStatus);
+    $('logoutButton').addEventListener('click', async () => {
+      const {error} = await supabaseClient.auth.signOut();
+      if (error) return showToast(`Erro ao sair: ${error.message}`);
+      await updateSessionStatus();
+      showToast('Sessão encerrada neste navegador.');
+    });
+
+    supabaseClient.auth.onAuthStateChange(() => updateSessionStatus());
+    updateSessionStatus();
+  }
+
+  $('year').textContent = new Date().getFullYear();
+  readStorage();
+  render();
+  configureSupabase();
+})();
+</script>
+</body>
+</html>
