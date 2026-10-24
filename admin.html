@@ -327,17 +327,16 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     showToast('Registros locais apagados.');
   });
 
-  function configureSupabase() {
-    const configured =
-  SUPABASE_URL.startsWith('https://') &&
-  Boolean(SUPABASE_PUBLIC_KEY);
-      && !SUPABASE_URL.includes('https://mhjlcudgfuavnsdugdae.supabase.co')
-      && SUPABASE_PUBLIC_KEY
-      && !SUPABASE_PUBLIC_KEY.includes('sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8');
+ 
+function configureSupabase() {
+  const configured =
+    SUPABASE_URL.startsWith('https://') &&
+    Boolean(SUPABASE_PUBLIC_KEY);
 
-    if (!configured) {
-      $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
-      $('accountStatus').textContent = 'Supabase ainda não configurado.';
+  if (!configured) {
+    $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
+    $('accountStatus').textContent = 'Supabase ainda não configurado.';
+
       $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
       $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
       $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
