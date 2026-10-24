@@ -34,7 +34,12 @@ $('clearPerms').addEventListener('click',()=>perms.forEach(p=>p.checked=false));
 $('clearData').addEventListener('click',()=>{if(confirm('Apagar todos os registros guardados neste navegador?')){data={premium:[],staff:[]};save();toast('Registros locais apagados.')}});
 $('exportData').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='special-core-admin-local.json';a.click();URL.revokeObjectURL(url)});
 render();
-</script></body></html>
+const { data, error } = await supabase.auth.signInWithOAuth({
+  provider: 'discord',
+  options: {
+    redirectTo: 'https://7mr-sam7.github.io/admin.html'
+  }
+});</script></body></html>
 
 /* SPECIAL CORE — ADMIN REDESIGN */
 :root {
