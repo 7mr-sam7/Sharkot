@@ -329,48 +329,73 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
 
  
 function configureSupabase() {
-  const configured =
-    SUPABASE_URL.startsWith('https://') &&
-    Boolean(SUPABASE_PUBLIC_KEY);
-
-  if (!configured) {
-    $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
-    $('accountStatus').textContent = 'Supabase ainda não configurado.';
-    
-      $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
-      $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
-      $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
-      return;
+    const configured = SUPABASE_URL.startsWith('https://') && Boolean(SUPABASE_PUBLIC_KEY);
+    if (!configured) {
+        $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
+        $('accountStatus').textContent = 'Supabase ainda não configurado.';
+        $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
+        $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
+        $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
+        return;
     }
 
     if (!window.supabase?.createClient) {
-      $('loginStatus').textContent = 'Não foi possível carregar a biblioteca Supabase.';
-      return;
+        $('loginStatus').textContent = 'Não foi possível carregar a biblioteca Supabase.';
+        return;
     }
 
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
 
     async function updateSessionStatus() {
-      const {data, error} = await supabaseClient.auth.getSession();
-      if (error) {
-        $('loginStatus').textContent = 'Erro ao consultar a sessão.';
-        $('accountStatus').textContent = error.message;
-        return;
-      }
-      const user = data.session?.user;
-      if (user) {
-        const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Conta Discord';
-        $('loginStatus').textContent = `Conectado: ${displayName}`;
-        $('accountName').textContent = displayName;
-        $('accountDetails').textContent = `E-mail: ${user.email || 'não fornecido'} · ID da conta Supabase: ${user.id}`;
-        $('accountStatus').textContent = 'Sessão Supabase ativa. Isso ainda não confirma permissão de administrador.';
-      } else {
-        $('loginStatus').textContent = 'Status: não conectado nesta página.';
-        $('accountName').textContent = 'Nenhuma conta conectada';
-        $('accountDetails').textContent = 'Use “Entrar com Discord” para iniciar a autenticação.';
-        $('accountStatus').textContent = 'Nenhuma sessão ativa.';
-      }
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error) {
+            $('loginStatus').textContent = 'Erro ao consultar a sessão.';
+            $('accountStatus').textContent = error.message;
+            return;
+        }
+        const user = data.session?.user;
+        if (user) {
+            const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Conta Discord';
+            $('loginStatus').textContent = `Conectado: ${displayName}`;
+            $('accountName').textContent = displayName;
+            $('accountDetails').textContent = `E-mail: ${user.email || 'não fornecido'} · ID da conta Supabase: ${user.id}`;
+            $('accountStatus').textContent = 'Sessão Supabase ativa. Isso ainda não confirma permissão de administrador.';
+        } else {
+            $('loginStatus').textContent = 'Status: não conectado nesta página.';
+            $('accountName').textContent = 'Nenhuma conta conectada';
+            $('accountDetails').textContent = 'Use “Entrar com Discord” para iniciar a autenticação.';
+            $('accountStatus').textContent = 'Nenhuma sessão ativa.';
+        }
     }
+
+        $('discordLogin').disabled = true;
+        $('discordLogin').textContent = 'Abrindo Discord…';
+        try {
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'discord',
+                options: { redirectTo: REDIRECT_URL }
+            });
+            if (error) showToast(`Erro no login: ${error.message}`);
+        } catch (error) {
+            showToast(`Erro no login: ${error.message}`);
+        } finally {
+            $('discordLogin').disabled = false;
+            $('discordLogin').textContent = 'Entrar com Discord ↗';
+        }
+    });
+
+    $('refreshSession').addEventListener('click', updateSessionStatus);
+    
+    $('logoutButton').addEventListener('click', async () => {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) return showToast(`Erro ao sair: ${error.message}`);
+        await updateSessionStatus();
+        showToast('Sessão encerrada neste navegador.');
+    });
+
+    supabaseClient.auth.onAuthStateChange(() => updateSessionStatus());
+    updateSessionStatus();
+}
 
     $('discordLogin').addEventListener('click', async () => {
       $('discordLogin').disabled = true;
