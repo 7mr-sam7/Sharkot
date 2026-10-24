@@ -336,7 +336,7 @@ function configureSupabase() {
   if (!configured) {
     $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
     $('accountStatus').textContent = 'Supabase ainda não configurado.';
-
+    
       $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
       $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
       $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
