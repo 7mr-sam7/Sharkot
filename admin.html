@@ -47,15 +47,12 @@
     </div>
     <div class="side-bottom"><div class="status"><b>Modo de demonstração</b>Os dados deste painel ficam salvos neste navegador. Ainda não são sincronizados com outros dispositivos.</div></div>
   </aside>
-
   <main class="main">
     <header class="topbar">
       <div><div class="eyebrow">SPECIAL CORE / ADMIN</div><h1 id="pageTitle">Visão geral</h1></div>
       <div class="top-actions"><span class="pill"><span class="dot"></span> Interface ativa</span><a class="btn" href="index.html">↗ Ver site</a></div>
     </header>
-
     <div class="notice"><strong>Importante:</strong> esta versão mantém o gerenciamento local. O login Discord abaixo autentica uma conta, mas não concede nem bloqueia privilégios administrativos no servidor. Para um painel seguro, a autorização precisa ser verificada no backend.</div>
-
     <section class="section active" id="section-overview">
       <div class="stats">
         <article class="stat"><div class="stat-top"><span>Usuários Premium</span><span class="stat-icon">✦</span></div><strong id="premiumCount">0</strong><small>Registros neste navegador</small></article>
@@ -71,7 +68,6 @@
         <div class="tool"><h3>Gerenciar equipe</h3><p>Organize os nomes e as funções da equipe.</p><button class="btn small" data-go="staff">Abrir equipe →</button></div>
       </div></div>
     </section>
-
     <section class="section" id="section-premium">
       <div class="panel">
         <div class="panel-head"><div><h2>Gerenciar Premium / VIP</h2><p class="sub">Adicione e remova registros locais de usuários Premium.</p></div><span class="tag" id="premiumBadge">0 REGISTROS</span></div>
@@ -85,7 +81,6 @@
         <div class="table-wrap"><table><thead><tr><th>Usuário</th><th>Identificador</th><th>Adicionado em</th><th>Ações</th></tr></thead><tbody id="premiumRows"></tbody></table><div class="empty" id="premiumEmpty">Nenhum usuário Premium cadastrado.</div></div>
       </div>
     </section>
-
     <section class="section" id="section-staff">
       <div class="panel"><div class="panel-head"><div><h2>Gerenciar equipe</h2><p class="sub">Cadastre nomes e funções para organização interna.</p></div><span class="tag" id="staffBadge">0 MEMBROS</span></div>
         <form class="form-grid" id="staffForm">
@@ -98,14 +93,12 @@
         <div class="table-wrap"><table><thead><tr><th>Membro</th><th>Função</th><th>Adicionado em</th><th>Ações</th></tr></thead><tbody id="staffRows"></tbody></table><div class="empty" id="staffEmpty">Nenhum membro cadastrado.</div></div>
       </div>
     </section>
-
     <section class="section" id="section-account">
       <div class="panel"><div class="panel-head"><div><h2>Conta e autenticação</h2><p class="sub">Status da sessão Supabase nesta página.</p></div></div>
         <div class="login-card"><div><h2 id="accountName">Nenhuma conta conectada</h2><p class="sub" id="accountDetails">Use “Entrar com Discord” para iniciar a autenticação.</p><div class="login-status" id="accountStatus">Sessão não verificada.</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="refreshSession">Verificar sessão</button><button class="btn danger" id="logoutButton">Sair</button></div></div>
       </div>
       <div class="panel"><h2>Configuração do Supabase</h2><p class="sub" style="margin:8px 0 16px">No código, preencha apenas a URL do projeto e a chave pública (publishable/anon). Nunca coloque a chave secreta ou o token administrativo aqui.</p><p class="sub">Após configurar, confirme no Supabase Authentication → URL Configuration se a URL de redirecionamento do site está permitida e se o provedor Discord está ativo.</p></div>
     </section>
-
     <section class="section" id="section-tools">
       <div class="panel"><div class="panel-head"><div><h2>Ferramentas de dados</h2><p class="sub">Exporte uma cópia ou apague os registros locais deste painel.</p></div></div>
         <div class="tools-grid">
@@ -120,18 +113,16 @@
   </main>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
 <script>
 (() => {
   'use strict';
 
-  // CONFIGURAÇÃO: use somente valores públicos do Supabase no frontend.
-  // Não cole SUPABASE_SECRET_KEY, Discord Client Secret ou ADMIN_TOKEN aqui.
+  // ========== CONFIGURAÇÃO ==========
   const SUPABASE_URL = 'https://mhjlcudgfuavnsdugdae.supabase.co';
-const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
-  const REDIRECT_URL = 'https://7mr-sam7.github.io/admin.html';
-
+  const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
+  const REDIRECT_URL = 'https://7mr-sam7.github.io/Sharkot/admin.html';
   const STORAGE_KEY = 'special-core-admin-v2';
+
   const $ = (id) => document.getElementById(id);
   const state = { premium: [], staff: [], updatedAt: null };
   let supabaseClient = null;
@@ -214,7 +205,7 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     $('premiumCount').textContent = state.premium.length;
     $('staffCount').textContent = state.staff.length;
     $('lastUpdated').textContent = state.updatedAt
-      ? new Date(state.updatedAt).toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'})
+      ? new Date(state.updatedAt).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
       : '—';
     renderPremium($('premiumSearch').value);
     renderStaff();
@@ -225,7 +216,13 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     const section = known.includes(sectionName) ? sectionName : 'overview';
     document.querySelectorAll('.section').forEach((node) => node.classList.toggle('active', node.id === `section-${section}`));
     document.querySelectorAll('[data-section]').forEach((node) => node.classList.toggle('active', node.dataset.section === section));
-    const titles = {overview:'Visão geral', premium:'Premium / VIP', staff:'Equipe', account:'Conta e acesso', tools:'Ferramentas'};
+    const titles = {
+      overview: 'Visão geral',
+      premium: 'Premium / VIP',
+      staff: 'Equipe',
+      account: 'Conta e acesso',
+      tools: 'Ferramentas'
+    };
     $('pageTitle').textContent = titles[section];
   }
 
@@ -233,12 +230,13 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
   }
 
+  // ========== EVENTOS ==========
   $('premiumForm').addEventListener('submit', (event) => {
     event.preventDefault();
     const name = $('premiumName').value.trim();
     const identifier = $('premiumId').value.trim();
     if (!name || !identifier) return showToast('Preencha nome e identificador.');
-    state.premium.unshift({id:makeId(), name, identifier, createdAt:new Date().toISOString()});
+    state.premium.unshift({ id: makeId(), name, identifier, createdAt: new Date().toISOString() });
     saveStorage();
     event.target.reset();
     showToast('Usuário adicionado à lista local.');
@@ -249,7 +247,7 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     const name = $('staffName').value.trim();
     const role = $('staffRole').value;
     if (!name) return showToast('Informe o nome do membro.');
-    state.staff.unshift({id:makeId(), name, role, createdAt:new Date().toISOString()});
+    state.staff.unshift({ id: makeId(), name, role, createdAt: new Date().toISOString() });
     saveStorage();
     event.target.reset();
     showToast('Membro adicionado à lista local.');
@@ -260,8 +258,10 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     const quickButton = event.target.closest('[data-go]');
     const removePremium = event.target.closest('[data-remove-premium]');
     const removeStaff = event.target.closest('[data-remove-staff]');
+
     if (sectionButton) navigate(sectionButton.dataset.section);
     if (quickButton) navigate(quickButton.dataset.go);
+
     if (removePremium) {
       const item = state.premium.find((entry) => entry.id === removePremium.dataset.removePremium);
       if (item && confirm(`Remover ${item.name} da lista local?`)) {
@@ -270,6 +270,7 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
         showToast('Registro removido.');
       }
     }
+
     if (removeStaff) {
       const item = state.staff.find((entry) => entry.id === removeStaff.dataset.removeStaff);
       if (item && confirm(`Remover ${item.name} da equipe local?`)) {
@@ -283,11 +284,11 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
   $('premiumSearch').addEventListener('input', (event) => renderPremium(event.target.value));
 
   $('exportButton').addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify({...state, exportedAt:new Date().toISOString()}, null, 2)], {type:'application/json'});
+    const blob = new Blob([JSON.stringify({ ...state, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = `special-core-admin-${new Date().toISOString().slice(0,10)}.json`;
+    anchor.download = `special-core-admin-${new Date().toISOString().slice(0, 10)}.json`;
     anchor.click();
     URL.revokeObjectURL(url);
     showToast('Exportação iniciada.');
@@ -302,15 +303,21 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
         throw new Error('O arquivo não contém as listas esperadas.');
       }
       if (!confirm('Importar vai substituir as listas locais atuais. Continuar?')) return;
+
       state.premium = imported.premium.map((item) => ({
-        id:String(item.id || makeId()), name:String(item.name || '').slice(0,80),
-        identifier:String(item.identifier || item.idDiscord || '').slice(0,100),
-        createdAt:item.createdAt || new Date().toISOString()
+        id: String(item.id || makeId()),
+        name: String(item.name || '').slice(0, 80),
+        identifier: String(item.identifier || item.idDiscord || '').slice(0, 100),
+        createdAt: item.createdAt || new Date().toISOString()
       })).filter((item) => item.name && item.identifier);
+
       state.staff = imported.staff.map((item) => ({
-        id:String(item.id || makeId()), name:String(item.name || '').slice(0,80),
-        role:String(item.role || 'Outro').slice(0,60), createdAt:item.createdAt || new Date().toISOString()
+        id: String(item.id || makeId()),
+        name: String(item.name || '').slice(0, 80),
+        role: String(item.role || 'Outro').slice(0, 60),
+        createdAt: item.createdAt || new Date().toISOString()
       })).filter((item) => item.name);
+
       saveStorage();
       $('importFile').value = '';
       showToast('Dados importados para este navegador.');
@@ -327,119 +334,84 @@ const SUPABASE_PUBLIC_KEY = 'sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8';
     showToast('Registros locais apagados.');
   });
 
- 
-function configureSupabase() {
+  // ========== SUPABASE / DISCORD ==========
+  function configureSupabase() {
     const configured = SUPABASE_URL.startsWith('https://') && Boolean(SUPABASE_PUBLIC_KEY);
+
     if (!configured) {
-        $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
-        $('accountStatus').textContent = 'Supabase ainda não configurado.';
-        $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
-        $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
-        $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
-        return;
+      $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
+      $('accountStatus').textContent = 'Supabase ainda não configurado.';
+      $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
+      $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
+      $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
+      return;
     }
 
     if (!window.supabase?.createClient) {
-        $('loginStatus').textContent = 'Não foi possível carregar a biblioteca Supabase.';
-        return;
+      $('loginStatus').textContent = 'Não foi possível carregar a biblioteca Supabase.';
+      return;
     }
 
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
 
     async function updateSessionStatus() {
-        const { data, error } = await supabaseClient.auth.getSession();
-        if (error) {
-            $('loginStatus').textContent = 'Erro ao consultar a sessão.';
-            $('accountStatus').textContent = error.message;
-            return;
-        }
-        const user = data.session?.user;
-        if (user) {
-            const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Conta Discord';
-            $('loginStatus').textContent = `Conectado: ${displayName}`;
-            $('accountName').textContent = displayName;
-            $('accountDetails').textContent = `E-mail: ${user.email || 'não fornecido'} · ID da conta Supabase: ${user.id}`;
-            $('accountStatus').textContent = 'Sessão Supabase ativa. Isso ainda não confirma permissão de administrador.';
-        } else {
-            $('loginStatus').textContent = 'Status: não conectado nesta página.';
-            $('accountName').textContent = 'Nenhuma conta conectada';
-            $('accountDetails').textContent = 'Use “Entrar com Discord” para iniciar a autenticação.';
-            $('accountStatus').textContent = 'Nenhuma sessão ativa.';
-        }
-    }
-function configureSupabase() {
-    const configured = SUPABASE_URL.startsWith('https://') && Boolean(SUPABASE_PUBLIC_KEY);
-    if (!configured) {
-        $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
-        $('accountStatus').textContent = 'Supabase ainda não configurado.';
-        $('discordLogin').addEventListener('click', () => showToast('Configure a URL e a chave pública do Supabase primeiro.'));
-        $('refreshSession').addEventListener('click', () => showToast('Configure o Supabase antes de verificar a sessão.'));
-        $('logoutButton').addEventListener('click', () => showToast('Nenhuma sessão Supabase ativa nesta página.'));
+      const { data, error } = await supabaseClient.auth.getSession();
+      if (error) {
+        $('loginStatus').textContent = 'Erro ao consultar a sessão.';
+        $('accountStatus').textContent = error.message;
         return;
-    }
+      }
 
-    if (!window.supabase?.createClient) {
-        $('loginStatus').textContent = 'Não foi possível carregar a biblioteca Supabase.';
-        return;
-    }
-
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
-
-    async function updateSessionStatus() {
-        const { data, error } = await supabaseClient.auth.getSession();
-        if (error) {
-            $('loginStatus').textContent = 'Erro ao consultar a sessão.';
-            $('accountStatus').textContent = error.message;
-            return;
-        }
-        const user = data.session?.user;
-        if (user) {
-            const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Conta Discord';
-            $('loginStatus').textContent = `Conectado: ${displayName}`;
-            $('accountName').textContent = displayName;
-            $('accountDetails').textContent = `E-mail: ${user.email || 'não fornecido'} · ID da conta Supabase: ${user.id}`;
-            $('accountStatus').textContent = 'Sessão Supabase ativa.';
-        } else {
-            $('loginStatus').textContent = 'Status: não conectado nesta página.';
-            $('accountName').textContent = 'Nenhuma conta conectada';
-            $('accountDetails').textContent = 'Use “Entrar com Discord” para iniciar a autenticação.';
-            $('accountStatus').textContent = 'Nenhuma sessão ativa.';
-        }
+      const user = data.session?.user;
+      if (user) {
+        const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email || 'Conta Discord';
+        $('loginStatus').textContent = `Conectado: ${displayName}`;
+        $('accountName').textContent = displayName;
+        $('accountDetails').textContent = `E-mail: ${user.email || 'não fornecido'} · ID da conta Supabase: ${user.id}`;
+        $('accountStatus').textContent = 'Sessão Supabase ativa. Isso ainda não confirma permissão de administrador.';
+      } else {
+        $('loginStatus').textContent = 'Status: não conectado nesta página.';
+        $('accountName').textContent = 'Nenhuma conta conectada';
+        $('accountDetails').textContent = 'Use “Entrar com Discord” para iniciar a autenticação.';
+        $('accountStatus').textContent = 'Nenhuma sessão ativa.';
+      }
     }
 
     $('discordLogin').addEventListener('click', async () => {
-        $('discordLogin').disabled = true;
-        $('discordLogin').textContent = 'Abrindo Discord…';
-        try {
-            const { error } = await supabaseClient.auth.signInWithOAuth({
-                provider: 'discord',
-                options: { redirectTo: REDIRECT_URL }
-            });
-            if (error) showToast(`Erro no login: ${error.message}`);
-        } catch (error) {
-            showToast(`Erro no login: ${error.message}`);
-        } finally {
-            $('discordLogin').disabled = false;
-            $('discordLogin').textContent = 'Entrar com Discord ↗';
-        }
+      $('discordLogin').disabled = true;
+      $('discordLogin').textContent = 'Abrindo Discord…';
+      try {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'discord',
+          options: { redirectTo: REDIRECT_URL }
+        });
+        if (error) showToast(`Erro no login: ${error.message}`);
+      } catch (error) {
+        showToast(`Erro no login: ${error.message}`);
+      } finally {
+        $('discordLogin').disabled = false;
+        $('discordLogin').textContent = 'Entrar com Discord ↗';
+      }
     });
 
     $('refreshSession').addEventListener('click', updateSessionStatus);
+
     $('logoutButton').addEventListener('click', async () => {
-        const { error } = await supabaseClient.auth.signOut();
-        if (error) return showToast(`Erro ao sair: ${error.message}`);
-        await updateSessionStatus();
-        showToast('Sessão encerrada neste navegador.');
+      const { error } = await supabaseClient.auth.signOut();
+      if (error) return showToast(`Erro ao sair: ${error.message}`);
+      await updateSessionStatus();
+      showToast('Sessão encerrada neste navegador.');
     });
 
     supabaseClient.auth.onAuthStateChange(() => updateSessionStatus());
     updateSessionStatus();
-}
+  }
 
-$('year').textContent = new Date().getFullYear();
-readStorage();
-render();
-configureSupabase();
+  // ========== INICIALIZAÇÃO ==========
+  $('year').textContent = new Date().getFullYear();
+  readStorage();
+  render();
+  configureSupabase();
 })();
 </script>
 </body>
