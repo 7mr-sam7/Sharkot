@@ -397,23 +397,6 @@ function configureSupabase() {
     updateSessionStatus();
 }
 
-    $('discordLogin').addEventListener('click', async () => {
-      $('discordLogin').disabled = true;
-      $('discordLogin').textContent = 'Abrindo Discord…';
-      try {
-        const {error} = await supabaseClient.auth.signInWithOAuth({
-          provider:'discord',
-          options:{redirectTo:REDIRECT_URL}
-        });
-        if (error) showToast(`Erro no login: ${error.message}`);
-      } catch (error) {
-        showToast(`Erro no login: ${error.message}`);
-      } finally {
-        $('discordLogin').disabled = false;
-        $('discordLogin').textContent = 'Entrar com Discord ↗';
-      }
-    });
-
     $('refreshSession').addEventListener('click', updateSessionStatus);
     $('logoutButton').addEventListener('click', async () => {
       const {error} = await supabaseClient.auth.signOut();
