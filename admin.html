@@ -329,9 +329,9 @@
 
   function configureSupabase() {
     const configured = SUPABASE_URL.startsWith('https://')
-      && !SUPABASE_URL.includes('COLE_AQUI')
+      && !SUPABASE_URL.includes('https://mhjlcudgfuavnsdugdae.supabase.co')
       && SUPABASE_PUBLIC_KEY
-      && !SUPABASE_PUBLIC_KEY.includes('COLE_AQUI');
+      && !SUPABASE_PUBLIC_KEY.includes('sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8');
 
     if (!configured) {
       $('loginStatus').textContent = 'Status: falta configurar a URL e a chave pública do Supabase no código.';
