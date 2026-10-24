@@ -67,4 +67,35 @@ const search=document.getElementById('commandSearch'),filter=document.getElement
 function filterCommands(){let q=search.value.toLowerCase().trim(),cat=filter.value,visible=0;groups.forEach(g=>{let groupVisible=0;const categoryOK=cat==='all'||g.dataset.category===cat;g.querySelectorAll('.command').forEach(c=>{let ok=categoryOK&&((c.innerText+' '+(c.dataset.search||'')).toLowerCase().includes(q));c.classList.toggle('hidden',!ok);if(ok){visible++;groupVisible++}});g.classList.toggle('hidden',groupVisible===0)});empty.style.display=visible?'none':'block'}
 search.addEventListener('input',filterCommands);filter.addEventListener('change',filterCommands);
 </script>
+
+<script>
+const API_URL = "https://special-core-backend.onrender.com";
+
+async function carregarConfiguracoes() {
+    try {
+        const resposta = await fetch(`${API_URL}/api/settings`);
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao buscar configurações");
+        }
+
+        const dados = await resposta.json();
+
+        console.log("Configurações carregadas:", dados.settings);
+
+        return dados.settings;
+    } catch (erro) {
+        console.error("Erro ao conectar com o backend:", erro);
+        return null;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+    const configuracoes = await carregarConfiguracoes();
+
+    if (configuracoes) {
+        console.log("Backend conectado ao site!");
+    }
+});
+</script>
 </body></html>
