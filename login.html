@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -13,6 +12,7 @@
     .login-card p { color:#a8a9bd; line-height:1.6; }
     .login-card .btn { width:100%; justify-content:center; margin-top:16px; }
     #status { min-height:24px; overflow-wrap:anywhere; }
+    .login-footer { position:fixed; bottom:18px; left:12px; right:12px; text-align:center; color:#9293a8; font-size:12px; }
   </style>
 </head>
 <body>
@@ -20,41 +20,33 @@
     <div class="brand-mark">SCr</div>
     <h1>Entrar na Special Core</h1>
     <p>Entre com sua conta Discord para acessar sua dashboard.</p>
-    <button class="btn" id="login">Entrar com Discord</button>
+    <button class="btn" id="login" type="button">Entrar com Discord</button>
     <p id="status" role="status"></p>
     <a href="index.html">Voltar ao site</a>
   </main>
+  <footer class="login-footer">Powered by <strong>Special Core</strong> © <span id="year"></span></footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = "https://mhjlcudgfuavnsdugdae.supabase.co";
     const SUPABASE_KEY = "sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8";
-
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
-
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     const status = document.getElementById("status");
     const button = document.getElementById("login");
+    document.getElementById("year").textContent = new Date().getFullYear();
 
     async function iniciar() {
       button.disabled = true;
       status.textContent = "Conectando ao Discord...";
-
       const { error } = await client.auth.signInWithOAuth({
         provider: "discord",
-        options: {
-          redirectTo: new URL("dashboard.html", location.href).href
-        }
+        options: { redirectTo: new URL("dashboard.html", location.href).href }
       });
-
       if (error) {
         status.textContent = "Erro no login: " + error.message;
         button.disabled = false;
       }
     }
-
     button.addEventListener("click", iniciar);
   </script>
 </body>
