@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -15,6 +14,11 @@
     .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; margin-top:24px; }
     .tile { padding:22px; }
     #status { color:#b8b9ca; overflow-wrap:anywhere; }
+    .locked { opacity:.45; pointer-events:none; user-select:none; }
+    .login-toast { position:fixed; right:22px; bottom:22px; z-index:9999; width:min(360px,calc(100vw - 32px)); padding:18px; border:1px solid #5865f2; border-radius:14px; background:#11121d; color:#fff; box-shadow:0 16px 50px #0008; }
+    .login-toast p { margin:0 0 12px; line-height:1.5; }
+    .login-toast .actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .login-toast[hidden] { display:none; }
   </style>
 </head>
 <body>
@@ -29,50 +33,37 @@
         <h2 id="username"></h2>
         <p id="userId"></p>
       </div>
-      <button class="btn secondary" id="logout">Sair</button>
+      <button class="btn secondary" id="logout" type="button">Sair</button>
     </section>
 
-    <section class="tiles">
-      <article class="panel tile">
-        <h2>Perfil</h2>
-        <p>Veja suas informações de conta.</p>
-      </article>
-      <article class="panel tile">
-        <h2>Configurações</h2>
-        <p>Preferências da sua conta.</p>
-      </article>
-      <article class="panel tile">
-        <h2>Serviços</h2>
-        <p>Conheça os serviços da Special Core.</p>
-      </article>
-      <article class="panel tile">
-        <h2>Sharkot</h2>
-        <p>Informações e recursos do bot.</p>
-      </article>
-      <article class="panel tile">
-        <h2>Premium</h2>
-        <p>Conheça os benefícios Premium.</p>
-        <a href="premium.html">Ver Premium ↗</a>
-      </article>
+    <section class="tiles" id="tiles">
+      <article class="panel tile"><h2>Perfil</h2><p>Veja suas informações de conta.</p></article>
+      <article class="panel tile"><h2>Configurações</h2><p>Preferências da sua conta.</p></article>
+      <article class="panel tile"><h2>Serviços</h2><p>Conheça os serviços da Special Core.</p></article>
+      <article class="panel tile"><h2>Sharkot</h2><p>Informações e recursos do bot.</p></article>
+      <article class="panel tile"><h2>Premium</h2><p>Conheça os benefícios Premium.</p><a href="premium.html">Ver Premium ↗</a></article>
     </section>
   </main>
+
+  <aside class="login-toast" id="loginToast" role="status" aria-live="polite" hidden>
+    <p><strong>Faça login para continuar.</strong><br>Você precisa entrar com o Discord para usar a dashboard.</p>
+    <div class="actions"><a class="btn small" href="login.html">Log Discord</a><button class="btn secondary small" id="dismissToast" type="button">Fechar</button></div>
+  </aside>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = "https://mhjlcudgfuavnsdugdae.supabase.co";
     const SUPABASE_KEY = "sb_publishable_aE2a5xzL8ZizSkdLNF7pmw_t2Yuxvs8";
-
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     async function iniciarDashboard() {
       const status = document.getElementById("status");
       const { data, error } = await client.auth.getSession();
 
       if (error || !data.session) {
-        location.replace("login.html");
+        status.textContent = "Dashboard bloqueada: faça login para usar os recursos.";
+        document.getElementById("tiles").classList.add("locked");
+        document.getElementById("loginToast").hidden = false;
         return;
       }
 
@@ -83,8 +74,7 @@
       const avatarUrl = meta.avatar_url;
 
       document.getElementById("username").textContent = username;
-      document.getElementById("userId").textContent =
-        discordId ? "Discord ID: " + discordId : "Conta autenticada";
+      document.getElementById("userId").textContent = discordId ? "Discord ID: " + discordId : "Conta autenticada";
       if (avatarUrl) document.getElementById("avatar").src = avatarUrl;
 
       document.getElementById("profile").hidden = false;
@@ -95,7 +85,9 @@
       await client.auth.signOut();
       location.replace("login.html");
     });
-
+    document.getElementById("dismissToast").addEventListener("click", () => {
+      document.getElementById("loginToast").hidden = true;
+    });
     iniciarDashboard();
   </script>
 </body>
