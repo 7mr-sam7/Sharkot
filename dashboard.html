@@ -1,1 +1,102 @@
 
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080910">
+  <title>Dashboard — Special Core</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { min-height:100vh; }
+    .dashboard { max-width:900px; margin:60px auto; padding:20px; }
+    .profile { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+    .avatar { width:76px; height:76px; border-radius:50%; object-fit:cover; }
+    .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; margin-top:24px; }
+    .tile { padding:22px; }
+    #status { color:#b8b9ca; overflow-wrap:anywhere; }
+  </style>
+</head>
+<body>
+  <main class="dashboard">
+    <a href="index.html">← Voltar ao site</a>
+    <h1>Sua dashboard</h1>
+    <p id="status">Verificando login...</p>
+
+    <section class="panel profile" id="profile" hidden>
+      <img class="avatar" id="avatar" alt="Avatar Discord">
+      <div>
+        <h2 id="username"></h2>
+        <p id="userId"></p>
+      </div>
+      <button class="btn secondary" id="logout">Sair</button>
+    </section>
+
+    <section class="tiles">
+      <article class="panel tile">
+        <h2>Perfil</h2>
+        <p>Veja suas informações de conta.</p>
+      </article>
+      <article class="panel tile">
+        <h2>Configurações</h2>
+        <p>Preferências da sua conta.</p>
+      </article>
+      <article class="panel tile">
+        <h2>Serviços</h2>
+        <p>Conheça os serviços da Special Core.</p>
+      </article>
+      <article class="panel tile">
+        <h2>Sharkot</h2>
+        <p>Informações e recursos do bot.</p>
+      </article>
+      <article class="panel tile">
+        <h2>Premium</h2>
+        <p>Conheça os benefícios Premium.</p>
+        <a href="premium.html">Ver Premium ↗</a>
+      </article>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = "https://mhjlcudgfuavnsdugdae.supabase.co";
+    const SUPABASE_KEY = "COLE_SUA_CHAVE_SB_PUBLISHABLE_AQUI";
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+
+    async function iniciarDashboard() {
+      const status = document.getElementById("status");
+      const { data, error } = await client.auth.getSession();
+
+      if (error || !data.session) {
+        location.replace("login.html");
+        return;
+      }
+
+      const user = data.session.user;
+      const meta = user.user_metadata || {};
+      const discordId = meta.provider_id || meta.sub || "";
+      const username = meta.full_name || meta.name || meta.user_name || "Usuário Discord";
+      const avatarUrl = meta.avatar_url;
+
+      document.getElementById("username").textContent = username;
+      document.getElementById("userId").textContent =
+        discordId ? "Discord ID: " + discordId : "Conta autenticada";
+      if (avatarUrl) document.getElementById("avatar").src = avatarUrl;
+
+      document.getElementById("profile").hidden = false;
+      status.textContent = "Login realizado com sucesso.";
+    }
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      await client.auth.signOut();
+      location.replace("login.html");
+    });
+
+    iniciarDashboard();
+  </script>
+</body>
+</html>
